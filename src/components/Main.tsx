@@ -1,14 +1,11 @@
 import { StyleSheet, View } from "react-native"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from "./common/Home";
 import Constants from 'expo-constants'
-import lighTeme from "../lightTheme";
+import Notes from "../screens/Notes"
 
 
 const Stack = createNativeStackNavigator()
-
-
 
 const Main = () => {
 
@@ -18,7 +15,7 @@ const Main = () => {
                 <Stack.Navigator>
                     <Stack.Screen
                         name = "Notes"
-                        component={ Home }
+                        component={ Notes }
                         initialParams={{ name: 'All'}}
                         options={{ headerShown: false }}
                     />
@@ -33,7 +30,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingTop: Constants.statusBarHeight,
-        backgroundColor: lighTeme.colors.primary
+        width: '100%'
       },
 
 })
