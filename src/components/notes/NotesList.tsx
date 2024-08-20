@@ -76,9 +76,13 @@ const data = [
     },
 ]
 
+interface Params extends ParamListBase{
+    Notes: {name?: string}
+}
+
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase>;
-    route: RouteProp<ParamListBase, 'Notes'>;
+    route: RouteProp<Params, 'Notes'>;
   }
 
 const NotesList = ({navigation, route}: Props) => {
