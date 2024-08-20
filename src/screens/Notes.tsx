@@ -2,10 +2,10 @@ import { View, StyleSheet } from "react-native"
 import lighTeme from "../lightTheme"
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { ParamListBase } from "@react-navigation/native";
-import Appbar from "../components/Notes/Appbar";
+import Appbar from "../components/notes/Appbar";
 import { RouteProp } from "@react-navigation/native";
-import NotesItemHeader from "../components/Notes/NotesItemHeader";
-import NotesList from "../components/Notes/NotesList";
+import NotesItemHeader from "../components/notes/NotesItemHeader";
+import NotesList from "../components/notes/NotesList";
 
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase>;
