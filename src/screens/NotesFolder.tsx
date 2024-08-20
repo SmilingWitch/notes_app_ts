@@ -2,7 +2,7 @@
 import { View, StyleSheet } from "react-native"
 import lighTeme from "../lightTheme"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import { ParamListBase, RouteProp } from "@react-navigation/native"
+import { ParamListBase } from "@react-navigation/native"
 import NotesFolderHeader from "../components/notes_folder/NotesFolderHeader"
 import NotesFolderList from "../components/notes_folder/NotesFolderList"
 
