@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Constants from 'expo-constants'
 import Notes from "../screens/Notes"
 import NotesFolder from "../screens/NotesFolder";
+import Note from "../screens/Note";
 
 
 const Stack = createNativeStackNavigator()
@@ -23,6 +24,11 @@ const Main = () => {
                     <Stack.Screen 
                         name="NotesFolder"
                         component={NotesFolder} 
+                        options={{ headerShown: false }} // Mostrar el AppBar
+                    />
+                    <Stack.Screen 
+                        name="Note" 
+                        component={Note} 
                         options={{ headerShown: false }} // Mostrar el AppBar
                     />
                 </Stack.Navigator>
