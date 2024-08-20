@@ -1,4 +1,4 @@
-import { Children, ReactNode } from "react"
+import { ReactNode } from "react"
 import { StyleProp, Text, TextStyle, StyleSheet } from "react-native"
 import lighTeme from "../../lightTheme";
 
