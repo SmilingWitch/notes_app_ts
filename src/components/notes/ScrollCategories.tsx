@@ -33,9 +33,13 @@ const data = [
     }
 ]
 
+interface Parameter extends ParamListBase{
+    Notes: {name?: string}
+}
+
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase>;
-    route: RouteProp<ParamListBase, 'Notes'>;
+    route: RouteProp<Parameter, 'Notes'>;
   }
 
 const ScrollCategories = ({route ,navigation}: Props) => {
