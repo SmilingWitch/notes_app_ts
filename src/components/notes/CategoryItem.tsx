@@ -7,31 +7,29 @@ import { ParamListBase } from "@react-navigation/native";
 interface Props {
     name: string,
     amount: number,
-    active: string,
+    active:  boolean,
     navigation: NativeStackNavigationProp<ParamListBase>;
 }
 
 
 const CategoryItem = ({name, amount, navigation, active}: Props) => {
 
-    const containerStyle = [
-        styles.container,
-        active && styles.containerActive
-    ]
-    const numberStyle = [
-        styles.number,
-        active && styles.numberActive 
-    ]
+    const containerStyle = {
+        ...styles.container,
+        ...(active && styles.containerActive)
+      };
+      const numberStyle = {
+        ...styles.number,
+        ...(active && styles.numberActive)
+      };
 
     return(
         <TouchableOpacity 
             style = {containerStyle} 
             onPress = {() => navigation.navigate('Notes', {name: name})}>
-            <StyledText color = { active && 'secondary'} >{name}</StyledText>
+            <StyledText color = {active ? 'secondary': "primary"} >{name}</StyledText>
             <View style = {numberStyle} ><StyledText fontSize = 'small' style = {styles.text}>{amount}</StyledText></View>
-        </TouchableOpacity>
-
-        
+        </TouchableOpacity>    
     )
 }
 
