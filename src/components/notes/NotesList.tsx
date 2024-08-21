@@ -6,78 +6,13 @@ import { ParamListBase, RouteProp } from "@react-navigation/native";
 import StyledText from "../common/StyledText";
 import NotesItem from "./NotesItem";
 import lighTeme from "../../lightTheme";
+import { useSelector, useDispatch } from 'react-redux';
+import { UserState } from "../../store/reducers";
 
-const data = [
-    {
-        id: 1,
-        category: 'Books',
-        name: 'Lorem 1',
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure facilis id consequatur corporis labore quaerat quam itaque molestias incidunt recusandae inventore ab vitae architecto minima cum officia sed, accusantium omnis!"
-    },
-    {
-        id: 2,
-        category: 'Exercise',
-        name: 'Lorem 2',
-        content : "Lorem ipsum dolor sit amet consectetur adipisicing elit. "
-    },
-    {
-        id: 3,
-        category: 'Lists',
-        name: 'Lorem 3',
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure facilis id consequatur corporis labore quaerat quam itaque molestias incidunt recusandae inventore ab vitae architecto minima cum officia sed, accusantium omnis!"
-    },
-    {
-        id: 4,
-        category: 'Novel',
-        name: 'Lorem 4',
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure facilis id consequatur corporis labore quaerat quam itaque molestias incidunt recusandae inventore ab vitae architecto minima cum officia sed, accusantium omnis!"
-    },
-    {
-        id: 5,
-        category: 'Books',
-        name: 'Lorem 5',
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure facilis id consequatur corporis labore quaerat quam itaque molestias incidunt recusandae inventore ab vitae architecto minima cum officia sed, accusantium omnis!"
-    },
-    {
-        id: 6,
-        category: 'Books',
-        name: 'Lorem 6',
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure facilis id consequatur corporis labore quaerat quam itaque molestias incidunt recusandae inventore ab vitae architecto minima cum officia sed, accusantium omnis!"
-    },
-    {
-        id: 7,
-        category: 'Exercise',
-        name: 'Lorem 7',
-        content : "Lorem ipsum dolor sit amet consectetur adipisicing elit. "
-    },
-    {
-        id: 8,
-        category: 'Lists',
-        name: 'Lorem 8',
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure facilis id consequatur corporis labore quaerat quam itaque molestias incidunt recusandae inventore ab vitae architecto minima cum officia sed, accusantium omnis!"
-    },
-    {
-        id: 9,
-        category: 'Novel',
-        name: 'Lorem 9',
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure facilis id consequatur corporis labore quaerat quam itaque molestias incidunt recusandae inventore ab vitae architecto minima cum officia sed, accusantium omnis!"
-    },
-    {
-        id: 10,
-        category: 'Books',
-        name: 'Lorem 10',
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure facilis id consequatur corporis labore quaerat quam itaque molestias incidunt recusandae inventore ab vitae architecto minima cum officia sed, accusantium omnis!"
-    },
-    {
-        id: 11,
-        category: 'Novel',
-        name: 'Lorem 11',
-        content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure facilis id consequatur corporis labore quaerat quam itaque molestias incidunt recusandae inventore ab vitae architecto minima cum officia sed, accusantium omnis!"
-    },
-]
+
 
 interface Params extends ParamListBase{
-    Notes: {name?: string}
+    Notes: {category_name?: string}
 }
 
 interface Props {
@@ -86,18 +21,22 @@ interface Props {
   }
 
 const NotesList = ({navigation, route}: Props) => {
-    const { name } = route.params;
+    const { category_name } = route.params;
     const { width } = useWindowDimensions();
     const [numColumns, setNumColumns] = useState(2);
+
+    console.log("CCCCC",category_name)
+
+    const notes = useSelector((state: UserState) => state.notes);
 
 
     // Memoriza los datos filtrados usando useMemo
     const filteredData = useMemo(() => {
-        if (name === 'All') {
-            return data;
+        if (category_name === 'All') {
+            return notes;
         }
-        return data.filter(item => item.category === name);
-    }, [name, data]);
+        return notes.filter(item => item.category === category_name);
+    }, [category_name, notes]);
 
 
     useEffect(() => {
@@ -107,7 +46,12 @@ const NotesList = ({navigation, route}: Props) => {
     }, [width]);
 
     const renderItem = ({item}: any) => (
-        <NotesItem id={item.id} navigation={navigation} name={item.name} content={item.content} date = "2:00"/>   
+        <NotesItem  id={item.id} 
+                    navigation={navigation} 
+                    name={item.title} 
+                    content={item.content} 
+                    route = {route}
+                    date = {item.date}/>   
     )
 
     return(
