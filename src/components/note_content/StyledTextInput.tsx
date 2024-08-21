@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
         borderColor: lighTeme.colors.primary,
         fontSize: lighTeme.fontSize.regular,
         color: lighTeme.colors.textPrimary,
-        flex: 1
      },
      error: {
         borderColor: 'red'
