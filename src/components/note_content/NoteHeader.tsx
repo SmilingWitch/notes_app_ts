@@ -5,23 +5,41 @@ import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { ParamListBase, RouteProp } from "@react-navigation/native"
 import lighTeme from "../../lightTheme"
 import StyledTextInput from "./StyledTextInput"
+import { useDispatch } from "react-redux"
+import { addNote } from "../../store/reducers"
 
 interface Parameters extends ParamListBase{
-    Note: {name?: string}
+    Note: {
+        name?: string,
+        category_name?: string
+    }
 }
-
 
 interface Props{
     navigation: NativeStackNavigationProp<ParamListBase>,
-    route: RouteProp<Parameters, "Note">
+    route: RouteProp<Parameters, "Note">,
+    input: string
 }
 
-const NoteHeader = ({navigation, route}: Props) => {
+const NoteHeader = ({navigation, route, input}: Props) => {
 
     const { name } = route.params;
-    const [header, setHeader] = useState(name)
+    const { category_name } = route.params;
+    const [header, setHeader] = useState(name || '')
+    const [category, setCategory] = useState(category_name || '')
 
-    console.log(header)
+    console.log("category_name", category_name)
+
+    const dispatch = useDispatch();
+    const handleAddNote = (title: string, content: string, category: string) => {
+        if(content !== "" && content !== undefined && title !== undefined && category !== undefined){
+            dispatch(addNote({ title, content, category }));
+        }else{
+           console.log("No se ha escrito nada") 
+        }  
+      };
+
+    console.log("HEADERRRRRRRRRRR",header)
 
     return(
         <View style = {styles.container}>
@@ -39,9 +57,12 @@ const NoteHeader = ({navigation, route}: Props) => {
                 />
 
             </View>
-            <View>
+            <TouchableOpacity onPress={() => 
+                {   handleAddNote(header, input, category),
+                    navigation.goBack()
+                }}>
                 <Icon name = "check" style = {styles.icon}></Icon>
-            </View>
+            </TouchableOpacity>
         </View>
     )
 }
