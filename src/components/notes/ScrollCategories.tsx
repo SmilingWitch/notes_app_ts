@@ -34,7 +34,7 @@ const data = [
 ]
 
 interface Parameter extends ParamListBase{
-    Notes: {name?: string}
+    Notes: {category_name?: string}
 }
 
 interface Props {
@@ -44,16 +44,16 @@ interface Props {
 
 const ScrollCategories = ({route ,navigation}: Props) => {
 
-    const { name } = route.params;
+    const { category_name } = route.params;
+    
 
     const renderItem = ({item}: any) => (
         <>
-        {console.log("ITEM",item.name)}
-        {console.log("ROUTE",route.path)}
+        
         <CategoryItem   name = {item.name} 
                         amount = {item.amount} 
                         navigation = {navigation} 
-                        active = {name === item.name}/>
+                        active = {category_name === item.name}/>
         </>
         
 
