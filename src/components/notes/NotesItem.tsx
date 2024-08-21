@@ -1,10 +1,13 @@
 import { View,StyleSheet, Dimensions, TouchableOpacity } from "react-native"
 import Icon from '@expo/vector-icons/AntDesign'
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ParamListBase } from "@react-navigation/native";
+import { ParamListBase, RouteProp } from "@react-navigation/native";
 import StyledText from "../common/StyledText";
 import lighTeme from "../../lightTheme";
 
+interface Parameters extends ParamListBase{
+    Notes: {category_name: string}
+}
 
 interface Props{
     id: number,
@@ -12,12 +15,16 @@ interface Props{
     content: string,
     date: any,
     navigation: NativeStackNavigationProp<ParamListBase>;
+    route: RouteProp<Parameters, 'Notes'>
 }
 
 
-const NotesItem = ({ id, navigation, name, content, date}: Props) => {
+const NotesItem = ({ id, navigation, name, content, date, route}: Props) => {
+
+    const { category_name } = route.params;
+
     return(
-        <TouchableOpacity style = {styles.container} onPress = {() => {navigation.navigate('Note', {name: name, content: content})}}>
+        <TouchableOpacity style = {styles.container} onPress = {() => {navigation.navigate('Note', {name: name, content: content, category_name: category_name})}}>
             <View>
                 <View style = {styles.header}>
                     <StyledText fontSize='h2' fontWeight='bold'>{name}</StyledText>
