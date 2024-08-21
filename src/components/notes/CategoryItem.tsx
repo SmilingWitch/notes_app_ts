@@ -26,7 +26,7 @@ const CategoryItem = ({name, amount, navigation, active}: Props) => {
     return(
         <TouchableOpacity 
             style = {containerStyle} 
-            onPress = {() => navigation.navigate('Notes', {name: name})}>
+            onPress = {() => navigation.navigate('Notes', {category_name: name})}>
             <StyledText color = {active ? 'secondary': "primary"} >{name}</StyledText>
             <View style = {numberStyle} ><StyledText fontSize = 'small' style = {styles.text}>{amount}</StyledText></View>
         </TouchableOpacity>    
