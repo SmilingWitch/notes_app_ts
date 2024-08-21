@@ -5,6 +5,7 @@ import Constants from 'expo-constants'
 import Notes from "../screens/Notes"
 import NotesFolder from "../screens/NotesFolder";
 import Note from "../screens/Note";
+import ManageFolders from "../screens/ManageFolder";
 
 
 const Stack = createNativeStackNavigator()
@@ -24,6 +25,11 @@ const Main = () => {
                     <Stack.Screen 
                         name="NotesFolder"
                         component={NotesFolder} 
+                        options={{ headerShown: false }} // Mostrar el AppBar
+                    />
+                    <Stack.Screen 
+                        name="ManageFolders"
+                        component={ManageFolders} 
                         options={{ headerShown: false }} // Mostrar el AppBar
                     />
                     <Stack.Screen 
