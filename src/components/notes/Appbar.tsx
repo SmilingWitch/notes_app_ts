@@ -3,13 +3,26 @@ import Icon from '@expo/vector-icons/AntDesign'
 import Icon1 from '@expo/vector-icons/FontAwesome'
 import lighTeme from "../../lightTheme"
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase } from "@react-navigation/native";
+import { ParamListBase, RouteProp } from "@react-navigation/native";
+
+interface Parameters extends ParamListBase{
+    Notes: {category_name: string}
+}
+
+
 
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase>;
+    route: RouteProp<Parameters, "Notes">
   }
 
-const Appbar = ({navigation}: Props) => {
+const Appbar = ({navigation, route}: Props) => {
+
+    const {category_name} = route.params
+
+    console.log("CATEGORY 30",category_name)
+
+
     return(
         <View style = {styles.container}>
             <TouchableOpacity onPress = {() => navigation.navigate('NotesFolder')}>
@@ -18,7 +31,7 @@ const Appbar = ({navigation}: Props) => {
             <TouchableOpacity onPress = {() => navigation.navigate('')}>
                 <Icon name = "setting" style = {styles.icon}></Icon>
             </TouchableOpacity>
-            <TouchableOpacity style = {styles.icon_pluss} onPress={() => navigation.navigate('Note', {name: "Untiteled Note", content: ""})}>
+            <TouchableOpacity style = {styles.icon_pluss} onPress={() => navigation.navigate('Note', {name: "Untiteled Note", content: "", category_name: category_name})}>
                 <Icon name = "plus" style = {styles.icon}></Icon>
             </TouchableOpacity>
             <TouchableOpacity onPress = {() => navigation.navigate('')}>
