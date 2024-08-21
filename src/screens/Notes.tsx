@@ -7,19 +7,28 @@ import { RouteProp } from "@react-navigation/native";
 import NotesItemHeader from "../components/notes/NotesItemHeader";
 import NotesList from "../components/notes/NotesList";
 
+
+interface Params extends ParamListBase{
+    Notes: {category_name: string}
+}
+
+
 interface Props {
     navigation: NativeStackNavigationProp<ParamListBase>;
-    route: RouteProp<ParamListBase, 'Notes'>;
+    route: RouteProp<Params, 'Notes'>;
   }
 
 const Notes = ({navigation, route}: Props) => {
+
+    const {category_name } = route.params
+    console.log(category_name)
 
 
     return(
         <View style={styles.container}>
             <NotesItemHeader navigation = {navigation} route = {route}></NotesItemHeader>
             <NotesList navigation = {navigation} route = {route}/>
-            <Appbar navigation = {navigation}></Appbar>
+            <Appbar navigation = {navigation} route = {route}></Appbar>
         </View>
         
     )
