@@ -1,22 +1,17 @@
 import { StyleSheet, ScrollView, KeyboardAvoidingView} from "react-native"
-import { useRef, useState } from "react"
-import { ParamListBase, RouteProp } from "@react-navigation/native"
+import { useRef} from "react"
 import StyledTextInput from "./StyledTextInput"
 import lighTeme from "../../lightTheme"
+import { NoteContentProps } from "../../types"
 
 
-interface AppParamList extends ParamListBase {
-    Note: { content?: string }; 
-} 
 
-interface Props{
-    route: RouteProp<AppParamList, "Note">,
-    setInput: React.Dispatch<React.SetStateAction<string>>
-
-}
-
-const NoteContent = ({route, setInput}: Props) => {
+const NoteContent = ({route, setInput}: NoteContentProps) => {
       const {content} = route.params
+      const inputRef = useRef(null);
+      const handleFocus = () => {
+            inputRef.current?.focus(); // Muestra el teclado
+        };
         
 
         /*//Select fraction of text
@@ -116,11 +111,7 @@ const NoteContent = ({route, setInput}: Props) => {
         });
       };*/
 
-      const inputRef = useRef(null);
-
-      const handleFocus = () => {
-            inputRef.current?.focus(); // Muestra el teclado
-        };
+      
 
     return(
             <KeyboardAvoidingView
