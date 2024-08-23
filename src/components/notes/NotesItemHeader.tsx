@@ -1,17 +1,11 @@
 import { View, StyleSheet } from "react-native"
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
-import { RouteProp } from "@react-navigation/native";
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ParamListBase } from "@react-navigation/native";
 import ScrollCategories from "./ScrollCategories";
+import { AppBarProps } from "../../types";
 
-interface Props {
-    navigation: NativeStackNavigationProp<ParamListBase>;
-    route: RouteProp<ParamListBase, 'Notes'>;
-  }
 
-const NotesItemHeader = ({navigation, route}: Props) => {
+const NotesItemHeader = ({navigation, route}: AppBarProps) => {
     return(
         <View style = {styles.container}>
 
