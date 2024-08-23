@@ -1,45 +1,22 @@
-import { View, StyleSheet, TouchableOpacity, TextInput } from "react-native"
-import Icon from '@expo/vector-icons/AntDesign'
+import { View, StyleSheet, TouchableOpacity } from "react-native"
 import { useState } from "react"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import { ParamListBase, RouteProp } from "@react-navigation/native"
+import Icon from '@expo/vector-icons/AntDesign'
 import lighTeme from "../../lightTheme"
 import StyledTextInput from "./StyledTextInput"
 import { useDispatch } from "react-redux"
-import { addNote } from "../../store/reducers"
+import { HeaderProps } from "../../types"
+import { handleAddNote } from "../../functions/handleAddNote"
 
-interface Parameters extends ParamListBase{
-    Note: {
-        name?: string,
-        category_name?: string
-    }
-}
 
-interface Props{
-    navigation: NativeStackNavigationProp<ParamListBase>,
-    route: RouteProp<Parameters, "Note">,
-    input: string
-}
-
-const NoteHeader = ({navigation, route, input}: Props) => {
+const NoteHeader = ({navigation, route, input}: HeaderProps) => {
 
     const { name } = route.params;
-    const { category_name } = route.params;
+    const { new_note = false } = route.params;
+    const { id } = route.params;
+    const { category_name = "" } = route.params;
     const [header, setHeader] = useState(name || '')
-    const [category, setCategory] = useState(category_name || '')
-
-    console.log("category_name", category_name)
-
     const dispatch = useDispatch();
-    const handleAddNote = (title: string, content: string, category: string) => {
-        if(content !== "" && content !== undefined && title !== undefined && category !== undefined){
-            dispatch(addNote({ title, content, category }));
-        }else{
-           console.log("No se ha escrito nada") 
-        }  
-      };
 
-    console.log("HEADERRRRRRRRRRR",header)
 
     return(
         <View style = {styles.container}>
@@ -58,7 +35,7 @@ const NoteHeader = ({navigation, route, input}: Props) => {
 
             </View>
             <TouchableOpacity onPress={() => 
-                {   handleAddNote(header, input, category),
+                {   handleAddNote(header, input, category_name, id, new_note, dispatch ),
                     navigation.goBack()
                 }}>
                 <Icon name = "check" style = {styles.icon}></Icon>
