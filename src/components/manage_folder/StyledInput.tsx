@@ -1,22 +1,19 @@
 import { TextInput, StyleSheet } from "react-native"
 import lighTeme from "../../lightTheme"
+import { StyleInputProps } from "../../types"
 
-interface Props{
-    error: string,
-    placeholder: string,
-    style: {},
-    [x: string]: any;
-}
-
-
-const StyledInput = ({style = {}, error, placeholder, ...props}: Props) => {
+const StyledInput = ({style = {}, error ,value , onChangeText, ...props}: StyleInputProps) => {
     const inputStyles = [
         styles.textInput,
         style,
         error && styles.error
     ]
+
     return(
-        <TextInput style = {inputStyles} {...props}></TextInput>
+        <TextInput 
+            style = {inputStyles} 
+            onChangeText ={onChangeText}
+            {...props}></TextInput>
     )
 }
 
