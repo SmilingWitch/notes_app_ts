@@ -1,18 +1,10 @@
 import { View, StyleSheet, TouchableOpacity } from "react-native"
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ParamListBase } from "@react-navigation/native";
-
-interface Props {
-    name: string,
-    amount: number,
-    active:  boolean,
-    navigation: NativeStackNavigationProp<ParamListBase>;
-}
+import { CategoryItemProps } from "../../types";
 
 
-const CategoryItem = ({name, amount, navigation, active}: Props) => {
+const CategoryItem = ({name, amount, navigation, active}: CategoryItemProps) => {
 
     const containerStyle = {
         ...styles.container,
