@@ -1,16 +1,13 @@
 import { TouchableOpacity, View, StyleSheet } from "react-native"
 import Icon from '@expo/vector-icons/Feather'
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import { ParamListBase } from "@react-navigation/native"
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
+import { NavigationProps } from "../../types"
 
 
-interface Props{
-    navigation: NativeStackNavigationProp<ParamListBase>
-}
 
-const ManageFolderHeader = ({navigation}:Props) => {
+
+const ManageFolderHeader = ({navigation}: NavigationProps) => {
     return(
         <View style = {styles.container}>
             <TouchableOpacity onPress={() => navigation.goBack()}>
