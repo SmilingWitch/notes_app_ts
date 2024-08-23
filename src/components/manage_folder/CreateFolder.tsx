@@ -1,30 +1,48 @@
-import { View, StyleSheet, Dimensions, Touchable, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native"
+import { View, StyleSheet, Dimensions,  TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native"
 import StyledText from "../common/StyledText"
-import StyledInput from "./StyledInput"
 import lighTeme from "../../lightTheme"
+import { CreateFolderProp } from "../../types"
+import { useDispatch } from "react-redux"
+import { createFolder } from "../../store/reducers"
+import { Formik } from "formik"
+import { validationSchema } from "../../functions/validationSchema"
+import FormikInputValue from "./FormikInputValue"
 
-interface Props{
-    setShowDialog: React.Dispatch<React.SetStateAction<boolean>>
-}
+const CreateFolder = ({setShowDialog}: CreateFolderProp) => {
+    const dispatch = useDispatch()
 
+    const handleAddFolder = ( name: string) => {
 
-const CreateFolder = ({setShowDialog}: Props) => {
+        dispatch(createFolder({name}))
+    }
+
+    const initialValues = {
+        name: ""
+    }
+
     return(
         <KeyboardAvoidingView style = {styles.container}  behavior={Platform.OS === "ios" ? "padding" : "height"}>
-            <View style = {styles.input_bx}>
-                <StyledText  fontWeight= 'bold'>Create Folder</StyledText>
-                <StyledInput placeholder = 'Folder'></StyledInput>
-
-                <View style = {styles.btn_bx}>
-                    <TouchableOpacity style = {styles.btn} onPress={() => setShowDialog(false)}>
-                        <StyledText  fontWeight='bold'>Cancel</StyledText>
-                    </TouchableOpacity>
-                    <TouchableOpacity style = {styles.btn}>
-                        <StyledText  fontWeight='bold'>Add</StyledText>
-                    </TouchableOpacity>
-                </View>
-
-            </View>
+            <Formik initialValues={initialValues}
+            onSubmit={values => handleAddFolder(  values.name )}
+            validationSchema ={validationSchema}>
+                {({handleSubmit}) => (
+                    <View style = {styles.input_bx}>
+                        <StyledText  fontWeight= 'bold'>Create Folder</StyledText>
+                        <FormikInputValue
+                                    name = "name"
+                                />
+                        <View style = {styles.btn_bx}>
+                            <TouchableOpacity style = {styles.btn} onPress={() => setShowDialog(false)}>
+                                <StyledText  fontWeight='bold'>Cancel</StyledText>
+                            </TouchableOpacity>
+                            <TouchableOpacity style = {styles.btn} onPress={() => handleSubmit()}>
+                                <StyledText  fontWeight='bold'>Add</StyledText>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                )}
+            </Formik>
+            
         </KeyboardAvoidingView>
     )
 }
