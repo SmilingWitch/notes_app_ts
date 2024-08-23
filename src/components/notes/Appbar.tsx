@@ -2,25 +2,12 @@ import { View, StyleSheet, TouchableOpacity } from "react-native"
 import Icon from '@expo/vector-icons/AntDesign'
 import Icon1 from '@expo/vector-icons/FontAwesome'
 import lighTeme from "../../lightTheme"
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { ParamListBase, RouteProp } from "@react-navigation/native";
-
-interface Parameters extends ParamListBase{
-    Notes: {category_name: string}
-}
+import { AppBarProps } from "../../types";
 
 
-
-interface Props {
-    navigation: NativeStackNavigationProp<ParamListBase>;
-    route: RouteProp<Parameters, "Notes">
-  }
-
-const Appbar = ({navigation, route}: Props) => {
+const Appbar = ({navigation, route}: AppBarProps) => {
 
     const {category_name} = route.params
-
-    console.log("CATEGORY 30",category_name)
 
 
     return(
@@ -31,7 +18,7 @@ const Appbar = ({navigation, route}: Props) => {
             <TouchableOpacity onPress = {() => navigation.navigate('')}>
                 <Icon name = "setting" style = {styles.icon}></Icon>
             </TouchableOpacity>
-            <TouchableOpacity style = {styles.icon_pluss} onPress={() => navigation.navigate('Note', {name: "Untiteled Note", content: "", category_name: category_name})}>
+            <TouchableOpacity style = {styles.icon_pluss} onPress={() => navigation.navigate('Note', {name: "Untiteled Note", content: "", category_name: category_name, new_note: true})}>
                 <Icon name = "plus" style = {styles.icon}></Icon>
             </TouchableOpacity>
             <TouchableOpacity onPress = {() => navigation.navigate('')}>
