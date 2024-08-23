@@ -1,25 +1,16 @@
 import { TextInput, StyleSheet, StyleProp, TextStyle} from "react-native"
 import { useEffect, useRef } from "react";
 import lighTeme from "../../lightTheme";
+import { StyledTextProps } from "../../types";
 
 
-interface Props{
-    error?: string,
-    color?: string,
-    fontSize?: string,
-    fontWeight?: string,
-    header?: string,
-    style?: StyleProp<TextStyle>,
-    name?: string,
-    value?: string,
-    multiline?: boolean,
-    onChangeText?: (text: string) => void,
-    [x: string]: any;
-
-}
-
-
-const StyledTextInput = ({style = {}, error, color, fontSize, fontWeight, header , ...props}: Props) => {
+const StyledTextInput = ({  style = {}, 
+                            error, 
+                            color, 
+                            fontSize, 
+                            fontWeight, 
+                            header , 
+                            ...props}: StyledTextProps) => {
     
     const inputRef = useRef<TextInput>(null);
 
