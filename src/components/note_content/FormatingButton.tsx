@@ -1,14 +1,10 @@
 import { TouchableOpacity, StyleSheet } from "react-native"
 import Icon from '@expo/vector-icons/FontAwesome'
 import lighTeme from "../../lightTheme"
+import { FormattingBtnProps } from "../../types";
 
 
-interface Props {
-    name: string
-    [x: string]: any;
-}
-
-const FormatingButton = ({name, ...prop}: Props) => {
+const FormatingButton = ({name, ...prop}: FormattingBtnProps) => {
     return (
         <TouchableOpacity style = {styles.container} {...prop}>
             <Icon name = {name} style = {styles.icon} ></Icon>
