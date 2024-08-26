@@ -1,11 +1,10 @@
 import { FlatList, StyleSheet } from "react-native"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { RouteProp } from "@react-navigation/native";
-import { ParamListBase } from "@react-navigation/native";
 import lighTeme from "../../lightTheme";
 import CategoryItem from "./CategoryItem";
+import { AppBarProps } from "../../types";
+import { useSelector } from "react-redux";
 
-const data = [
+/*const data = [
     {
         id: 1,
         name: 'All',
@@ -31,39 +30,27 @@ const data = [
         name: 'Books',
         amount: 3
     }
-]
+]*/
 
-interface Parameter extends ParamListBase{
-    Notes: {category_name?: string}
-}
-
-interface Props {
-    navigation: NativeStackNavigationProp<ParamListBase>;
-    route: RouteProp<Parameter, 'Notes'>;
-  }
-
-const ScrollCategories = ({route ,navigation}: Props) => {
+const ScrollCategories = ({route ,navigation}: AppBarProps) => {
 
     const { category_name } = route.params;
-    
+    const folders = useSelector((state: any) => state.folder)
+    console.log(category_name)
 
     const renderItem = ({item}: any) => (
         <>
-        
         <CategoryItem   name = {item.name} 
                         amount = {item.amount} 
                         navigation = {navigation} 
                         active = {category_name === item.name}/>
-        </>
-        
-
-                        
+        </>                   
     )
 
     return(
         <FlatList
         renderItem={renderItem}
-        data = {data}
+        data = {folders}
         keyExtractor={(item) => item.id}
         horizontal
         style = {styles.container}
