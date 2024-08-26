@@ -1,54 +1,23 @@
 import { FlatList, StyleSheet } from "react-native"
-import NotesFolder from "./NotesFolderItem"
 import NotesFolderItem from "./NotesFolderItem"
 import NotesFolderItemWithoutTouch from "./NotesFolderItemWithoutTouch"
 import lighTeme from "../../lightTheme"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import { ParamListBase, RouteProp } from "@react-navigation/native"
+import { NotesFolderListProps } from "../../types"
+import { useSelector } from "react-redux"
 
-const data = [
-    {
-        id: 1,
-        name: 'All',
-        amount: 100
-    },
-    {
-        id: 2,
-        name: 'Novel',
-        amount: 20
-    },
-    {
-        id: 3,
-        name: 'Lists',
-        amount: 5
-    },
-    {
-        id: 4,
-        name: 'Exercise',
-        amount: 10
-    },
-    {
-        id: 5,
-        name: 'Books',
-        amount: 3
-    }
-]
-
-interface Props{
-    navigation: NativeStackNavigationProp<ParamListBase>,
-    touch: boolean
-}
-
-const NotesFolderList = ({navigation, touch}: Props) => {
+const NotesFolderList = ({navigation, touch}: NotesFolderListProps) => {
     
+    const folders = useSelector((state: any) => state.folder)
+    console.log(folders)
+
     const renderItem = ({item}: any) => (
-        touch === true ? <NotesFolderItem name = {item.name} amount = {item.amount} navigation = {navigation}/>:
-                          <NotesFolderItemWithoutTouch name = {item.name} amount = {item.amount}/>
+        touch === true ? <NotesFolderItem name = {item.name} amount = {3} navigation = {navigation}/>:
+                          <NotesFolderItemWithoutTouch name = {item.name} amount = {3}/>
     )
 
 
     return(
-            <FlatList data = {data}
+            <FlatList data = {folders}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
                 style = {styles.container}>
