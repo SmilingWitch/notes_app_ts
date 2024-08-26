@@ -1,47 +1,24 @@
-import { Dimensions, FlatList, StyleSheet, View, useWindowDimensions } from "react-native"
+import { FlatList, StyleSheet, useWindowDimensions } from "react-native"
 import { useEffect, useState } from "react";
-import { useMemo } from 'react';
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ParamListBase, RouteProp } from "@react-navigation/native";
+import { UserState } from "../../store/reducers";
+import { useSelector} from 'react-redux';
+import { NotesListProps } from "../../types";
 import StyledText from "../common/StyledText";
 import NotesItem from "./NotesItem";
 import lighTeme from "../../lightTheme";
-import { useSelector, useDispatch } from 'react-redux';
-import { UserState } from "../../store/reducers";
+import filterData from "../../hooks/fiterData";
 
 
-
-interface Params extends ParamListBase{
-    Notes: {category_name?: string}
-}
-
-interface Props {
-    navigation: NativeStackNavigationProp<ParamListBase>;
-    route: RouteProp<Params, 'Notes'>;
-  }
-
-const NotesList = ({navigation, route}: Props) => {
-    const { category_name } = route.params;
+const NotesList = ({navigation, route}: NotesListProps) => {
+    const { category_name = '' } = route.params;
     const { width } = useWindowDimensions();
     const [numColumns, setNumColumns] = useState(2);
-
-    console.log("CCCCC",category_name)
-
     const notes = useSelector((state: UserState) => state.notes);
 
-
     // Memoriza los datos filtrados usando useMemo
-    const filteredData = useMemo(() => {
-        if (category_name === 'All') {
-            return notes;
-        }
-        return notes.filter(item => item.category === category_name);
-    }, [category_name, notes]);
-
+    const {filteredData} = filterData({notes, category_name})
 
     useEffect(() => {
-      // Calcula el número de columnas basado en el ancho de la pantalla
-      const cols = Math.floor(width / 100); // Ajusta el divisor según tus necesidades
       setNumColumns(2);
     }, [width]);
 
