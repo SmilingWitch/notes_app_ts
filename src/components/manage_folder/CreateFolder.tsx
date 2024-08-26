@@ -12,8 +12,8 @@ const CreateFolder = ({setShowDialog}: CreateFolderProp) => {
     const dispatch = useDispatch()
 
     const handleAddFolder = ( name: string) => {
-
         dispatch(createFolder({name}))
+        setShowDialog(false)
     }
 
     const initialValues = {
