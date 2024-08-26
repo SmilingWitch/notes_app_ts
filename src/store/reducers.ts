@@ -7,10 +7,14 @@ interface Note {
   date: number,
   category: string,
 }
+interface Folder {
+  id: number,
+  name: string
+}
 
 export interface UserState {
   notes: Note[];
-  folder: []
+  folder: Folder[]
 }
 
 const initialState: UserState = {
@@ -22,8 +26,12 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    folder: (state, action) => {
-      state.folder = action.payload
+    createFolder: (state, action) => {
+      const newFolder: Folder = {
+        id: Date.now(), // Puedes usar un generador de ID más robusto
+        name: action.payload.name,
+      };
+      state.folder.push(newFolder);
     },
     addNote: (state, action) => {
       const newNote: Note = {
@@ -49,5 +57,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { addNote, updateNote, deleteNote } = userSlice.actions;
+export const { addNote, updateNote, deleteNote, createFolder } = userSlice.actions;
 export default userSlice.reducer;
