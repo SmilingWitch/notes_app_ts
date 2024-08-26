@@ -1,14 +1,20 @@
-import { View, StyleSheet, TouchableOpacity} from "react-native"
+import { View, StyleSheet, TouchableOpacity, Vibration} from "react-native"
 import Ionaicons from '@expo/vector-icons/Ionicons'
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
 import {  FolderProps } from "../../types"
+import { useState } from "react"
+import { useDispatch } from "react-redux"
+import { deleteNote } from "../../store/reducers"
 
 
-const NotesFolderItem = ({name, amount, navigation}: FolderProps) => {
+const NotesFolderItem = ({name, amount, navigation, id}: FolderProps) => {
 
+  
     return(
-        <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('Notes', {
+        <TouchableOpacity style = {styles.container} 
+        
+        onPress={() => navigation.navigate('Notes', {
           name: name,
           category_name: name
         })}>
@@ -45,7 +51,8 @@ const styles = StyleSheet.create({
       },
       text: {
         color: lighTeme.colors.lightGrey
-      }
+      },
+
 })
 
 
