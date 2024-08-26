@@ -14,12 +14,14 @@ interface Folder {
 
 export interface UserState {
   notes: Note[];
-  folder: Folder[]
+  folder: Folder[],
+  selectedFolderID: {}
 }
 
 const initialState: UserState = {
   notes: [],
-  folder: []
+  folder: [],
+  selectedFolderID: {}
 };
 
 const userSlice = createSlice({
@@ -32,6 +34,19 @@ const userSlice = createSlice({
         name: action.payload.name,
       };
       state.folder.push(newFolder);
+    },
+    deleteFolder: (state, action) => {
+      const folderId = action.payload;
+      const name = action.payload
+      console.log("NAME", folderId)
+      state.folder = state.folder.filter((folder: any) => folder.id !== folderId.category.id);
+      state.notes = state.notes.filter((note: any) => note.category !== name.category.name);
+    },
+    selectedFolder: (state, action) => {
+      const folderId = action.payload;
+      const category = action.payload
+      console.log("SELECTED",folderId)
+      state.selectedFolderID = {folderId, category};
     },
     addNote: (state, action) => {
       const newNote: Note = {
@@ -57,5 +72,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { addNote, updateNote, deleteNote, createFolder } = userSlice.actions;
+export const { addNote, updateNote, deleteNote, createFolder, deleteFolder, selectedFolder } = userSlice.actions;
 export default userSlice.reducer;
