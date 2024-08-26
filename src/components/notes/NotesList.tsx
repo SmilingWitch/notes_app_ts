@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, useWindowDimensions } from "react-native"
+import { FlatList, StyleSheet, useWindowDimensions, View } from "react-native"
 import { useEffect, useState } from "react";
 import { UserState } from "../../store/reducers";
 import { useSelector} from 'react-redux';
@@ -41,9 +41,14 @@ const NotesList = ({navigation, route}: NotesListProps) => {
             columnWrapperStyle={styles.containerWrapp}
             contentContainerStyle = {styles.container}
             ListEmptyComponent={
-                <StyledText>
-                    List is empty
-                </StyledText>
+                <View style = {styles.empty_list}>
+                    <StyledText>
+                        No notes
+                    </StyledText>
+                    <StyledText fontSize="small" >
+                        Tab the Add button to create a note
+                    </StyledText>
+                </View> 
             }
         ></FlatList>
     )
@@ -58,6 +63,12 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: lighTeme.colors.primary,
     },
+    empty_list: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: '60%'
+    }
 
 })
 
