@@ -2,21 +2,15 @@ import { View, StyleSheet, TouchableOpacity} from "react-native"
 import Ionaicons from '@expo/vector-icons/Ionicons'
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import { ParamListBase } from "@react-navigation/native"
+import {  FolderProps } from "../../types"
 
 
-interface Props{
-    name: string,
-    amount: number,
-    navigation: NativeStackNavigationProp<ParamListBase>
-}
-
-const NotesFolderItem = ({name, amount, navigation}: Props) => {
+const NotesFolderItem = ({name, amount, navigation}: FolderProps) => {
 
     return(
         <TouchableOpacity style = {styles.container} onPress={() => navigation.navigate('Notes', {
-          name: name
+          name: name,
+          category_name: name
         })}>
           <>
           <View style = {styles.header}  >
