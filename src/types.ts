@@ -54,15 +54,19 @@ export interface FolderProps {
     name: string,
     amount: number,
     navigation: NativeStackNavigationProp<ParamListBase>;
+    id: number
 }
 export interface FolderPropsWithoutTouch {
     name: string,
     amount: number,
+    id: number,
+    setShowThrash: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export interface NotesFolderListProps{
     navigation: NativeStackNavigationProp<ParamListBase>,
-    touch: boolean
+    touch: boolean,
+    setShowThrash: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 //Note Content
