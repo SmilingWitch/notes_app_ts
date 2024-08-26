@@ -3,14 +3,9 @@ import { View, StyleSheet, TouchableOpacity} from "react-native"
 import Ionaicons from '@expo/vector-icons/Ionicons'
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
+import { FolderPropsWithoutTouch } from "../../types"
 
-
-interface Props{
-    name: string,
-    amount: number
-}
-
-const NotesFolderItemWithoutTouch = ({name, amount}: Props) => {
+const NotesFolderItemWithoutTouch = ({name, amount}:  FolderPropsWithoutTouch) => {
 
     return(
         <TouchableOpacity style = {styles.container}>
