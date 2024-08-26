@@ -2,14 +2,10 @@ import { View, StyleSheet, TouchableOpacity } from "react-native"
 import Icon from '@expo/vector-icons/Feather'
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack"
-import { ParamListBase } from "@react-navigation/native"
+import { NavigationProps } from "../../types"
 
-interface Props{
-    navigation: NativeStackNavigationProp<ParamListBase>
-}
 
-const NotesFolderHeader = ({navigation}: Props) => {
+const NotesFolderHeader = ({navigation}: NavigationProps) => {
 
     return (
         <View style = {styles.container}>
