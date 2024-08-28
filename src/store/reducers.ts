@@ -9,19 +9,21 @@ interface Note {
 }
 interface Folder {
   id: number,
-  name: string
+  name: string,
 }
 
 export interface UserState {
   notes: Note[];
   folder: Folder[],
-  selectedFolderID: {}
+  selectedFolderID: [],
+  selectedNoteID: number
 }
 
 const initialState: UserState = {
   notes: [],
   folder: [],
-  selectedFolderID: {}
+  selectedFolderID: [],
+  selectedNoteID: 0
 };
 
 const userSlice = createSlice({
@@ -36,18 +38,33 @@ const userSlice = createSlice({
       state.folder.push(newFolder);
     },
     deleteFolder: (state, action) => {
-      const folderId = action.payload;
       const name = action.payload
-      console.log("NAME", folderId)
-      state.folder = state.folder.filter((folder: any) => folder.id !== folderId.category.id);
-      state.notes = state.notes.filter((note: any) => note.category !== name.category.name);
+      // Itera sobre cada carpeta en foldersToDelete para eliminarlas junto con sus notas asociadas
+    
+      name.forEach((folderToDelete: { id: number, name: string }) => {
+
+      // Elimina la carpeta cuyo ID coincide con el ID del objeto en foldersToDelete
+      state.folder = state.folder.filter((folder: any) => folder.id !== folderToDelete.id);
+
+      // Elimina las notas cuya categoría coincide con el nombre de la carpeta eliminada
+      state.notes = state.notes.filter((note: any) => note.category !== folderToDelete.name);
+  });
+      
+      state.selectedFolderID = []
     },
     selectedFolder: (state, action) => {
       const folderId = action.payload;
-      const category = action.payload
-      console.log("SELECTED",folderId)
-      state.selectedFolderID = {folderId, category};
+      state.selectedFolderID.push(folderId);
     },
+    clearSelectedFolder: (state, action) => {
+      state.selectedFolderID = []
+    },
+    selectedNote: (state, action) => {
+      const noteId = action.payload;
+      console.log(noteId)
+      state.selectedNoteID = noteId;
+    },
+    
     addNote: (state, action) => {
       const newNote: Note = {
         id: Date.now(), // Puedes usar un generador de ID más robusto
@@ -67,10 +84,18 @@ const userSlice = createSlice({
     },
     deleteNote: (state, action) => {
       const noteId = action.payload;
+      console.log("NOTE ID",noteId)
       state.notes = state.notes.filter((note) => note.id !== noteId);
     },
   },
 });
 
-export const { addNote, updateNote, deleteNote, createFolder, deleteFolder, selectedFolder } = userSlice.actions;
+export const {  addNote, 
+                updateNote, 
+                deleteNote, 
+                createFolder, 
+                deleteFolder, 
+                selectedFolder, 
+                selectedNote,
+                clearSelectedFolder } = userSlice.actions;
 export default userSlice.reducer;
