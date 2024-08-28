@@ -11,10 +11,20 @@ const ScrollCategories = ({route ,navigation}: AppBarProps) => {
     const { category_name } = route.params;
     const folders = useSelector((state: any) => state.folder)
     
+    
+    // Crear una categoría "All" manualmente
+    const allCategory = {
+        id: 'all',
+        name: 'All',
+    };
+    
+    // Combinar la categoría "All" con las demás categorías
+    const combinedCategories = [allCategory, ...folders];
+
+    
     const renderItem = ({item}: any) => (
         <>
         <CategoryItem   name = {item.name} 
-                        amount = {item.amount} 
                         navigation = {navigation} 
                         active = {category_name === item.name}/>
         </>                   
@@ -23,8 +33,8 @@ const ScrollCategories = ({route ,navigation}: AppBarProps) => {
     return(
         <FlatList
         renderItem={renderItem}
-        data = {folders}
-        keyExtractor={(item) => item.id}
+        data={combinedCategories}
+        keyExtractor={(item) => item.id.toString()}
         horizontal
         style = {styles.container}
         />
