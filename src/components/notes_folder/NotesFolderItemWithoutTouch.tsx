@@ -1,43 +1,57 @@
 
-import { View, StyleSheet, TouchableOpacity, Vibration} from "react-native"
+import { View, StyleSheet, TouchableOpacity, Vibration, BackHandler} from "react-native"
 import Ionaicons from '@expo/vector-icons/Ionicons'
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
 import { FolderPropsWithoutTouch } from "../../types"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import {  selectedFolder } from "../../store/reducers"
+import {  clearSelectedFolder, clearSelectedFolderById, selectedFolder } from "../../store/reducers"
 
 const NotesFolderItemWithoutTouch = ({name, amount, id, setShowThrash, selectedItems, setSelectedItems}:  FolderPropsWithoutTouch) => {
 
   const selected = useSelector((state: any) => state.selectedFolderID)
-  const [isPressed, setIsPressed] = useState(false)
   const dispatch = useDispatch()
-
-  const selected1 = selectedItems.filter((itemId: number) => itemId === id)
-
-
-  console.log("SELECTED",selected1)
-
   const isSelected = selectedItems.includes(id);
 
-  const handlePress = () => {
+  const handlePressItem = (id : number, name: string) => {
     if (isSelected) {
       setSelectedItems(selectedItems.filter((itemId : number) => itemId !== id));
-      
+      dispatch(clearSelectedFolderById(id))
     } else {
       setSelectedItems([...selectedItems, id]);
+      dispatch(selectedFolder({id, name}))  
     }
   };
 
+  useEffect(() => {
+    if(selected.length !== 0){
+      const backAction = () => {
+        dispatch(clearSelectedFolder(id))
+        setSelectedItems([]);
+        setShowThrash(false)
+        // Retorna true para evitar que el botón de atrás haga su comportamiento predeterminado
+        return true;
+      };
+      const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backAction
+      );
+    
+      // Limpia el listener cuando el componente se desmonte
+      return () => backHandler.remove();
+     
+    } else {
+    }
+  }, [selected]);
+
     return(
-        <TouchableOpacity style = {isPressed ? styles.isPressed : styles.container} 
+        <TouchableOpacity style = {isSelected ? styles.isPressed : styles.container} 
         onLongPress={() => {
           Vibration.vibrate(70);
-          setIsPressed(true);
           setShowThrash(true)
-          handlePress();
-          dispatch(selectedFolder({id, name}))        
+          handlePressItem(id, name);  
+           
           }}>
           <>
           <View style = {styles.header} >
