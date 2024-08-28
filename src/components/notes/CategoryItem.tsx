@@ -2,9 +2,16 @@ import { View, StyleSheet, TouchableOpacity } from "react-native"
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
 import { CategoryItemProps } from "../../types";
+import { useSelector } from "react-redux";
 
 
-const CategoryItem = ({name, amount, navigation, active}: CategoryItemProps) => {
+const CategoryItem = ({name, navigation, active}: CategoryItemProps) => {
+
+    const notes = useSelector((state: any) => state.notes);
+
+    // Calcular la cantidad total de notas
+    const totalNotes = notes.length;
+    const amount = notes.filter((note : any) => note.category === name).length
 
     const containerStyle = {
         ...styles.container,
@@ -20,7 +27,7 @@ const CategoryItem = ({name, amount, navigation, active}: CategoryItemProps) => 
             style = {containerStyle} 
             onPress = {() => navigation.navigate('Notes', {category_name: name})}>
             <StyledText color = {active ? 'secondary': "primary"} >{name}</StyledText>
-            <View style = {numberStyle} ><StyledText fontSize = 'small' style = {styles.text}>{amount}</StyledText></View>
+            <View style = {numberStyle} ><StyledText fontSize = 'small' style = {styles.text}>{name === "All" ? totalNotes : amount}</StyledText></View>
         </TouchableOpacity>    
     )
 }
