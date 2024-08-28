@@ -4,11 +4,18 @@ import { BackHandler } from "react-native";
 import { useDispatch} from "react-redux";
 import { clearSelectedFolder } from "../store/reducers";
 
+interface backHandlerProps {
+    selectedItems: number[], 
+    setSelectedItems: React.Dispatch<React.SetStateAction<number[]>>, 
+    setShowThrash: React.Dispatch<React.SetStateAction<boolean>>,
+    selected: any[],
+}
 
-export const useBackHandler = ( selectedItems: number[], 
-                                setSelectedItems: React.Dispatch<React.SetStateAction<number[]>>, 
-                                setShowThrash: React.Dispatch<React.SetStateAction<boolean>>,
-                                selected: any[]) => {
+
+export const useBackHandler = ( {selectedItems, 
+                                setSelectedItems, 
+                                setShowThrash,
+                                selected,}: backHandlerProps) => {
     const dispatch = useDispatch()
     
     useEffect(() => {
