@@ -2,12 +2,19 @@
 import { useDispatch, useSelector } from "react-redux";
 import { clearSelectedFolder, clearSelectedFolderById, selectedFolder } from "../store/reducers";
 
+interface useFolderSelectionProp {
+    id: number, 
+    name: string,
+    selectedItems: number[],
+    setSelectedItems: React.Dispatch<React.SetStateAction<number[]>>,
+    setShowThrash: (show: boolean) => void
+}
 
-export const useFolderSelection = ( id: number, 
-                                    name: string,
-                                    selectedItems: number[],
-                                    setSelectedItems: React.Dispatch<React.SetStateAction<number[]>>,
-                                    setShowThrash: (show: boolean) => void) => {
+export const useFolderSelection = ( {id, 
+                                    name,
+                                    selectedItems,
+                                    setSelectedItems,
+                                    setShowThrash}: useFolderSelectionProp ) => {
   const dispatch = useDispatch();
   const selected = useSelector((state: any) => state.selectedFolderID);
   const isSelected = selectedItems.includes(id);
