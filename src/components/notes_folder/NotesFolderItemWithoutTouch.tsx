@@ -5,22 +5,40 @@ import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
 import { FolderPropsWithoutTouch } from "../../types"
 import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { deleteFolder, deleteNote, selectedFolder } from "../../store/reducers"
+import { useDispatch, useSelector } from "react-redux"
+import {  selectedFolder } from "../../store/reducers"
 
-const NotesFolderItemWithoutTouch = ({name, amount, id, setShowThrash}:  FolderPropsWithoutTouch) => {
+const NotesFolderItemWithoutTouch = ({name, amount, id, setShowThrash, selectedItems, setSelectedItems}:  FolderPropsWithoutTouch) => {
 
+  const selected = useSelector((state: any) => state.selectedFolderID)
   const [isPressed, setIsPressed] = useState(false)
   const dispatch = useDispatch()
 
+  const selected1 = selectedItems.filter((itemId: number) => itemId === id)
+
+
+  console.log("SELECTED",selected1)
+
+  const isSelected = selectedItems.includes(id);
+
+  const handlePress = () => {
+    if (isSelected) {
+      setSelectedItems(selectedItems.filter((itemId : number) => itemId !== id));
+      
+    } else {
+      setSelectedItems([...selectedItems, id]);
+    }
+  };
+
     return(
-        <TouchableOpacity style = {isPressed ? styles.isPressed : styles.container} onLongPress={() => {
+        <TouchableOpacity style = {isPressed ? styles.isPressed : styles.container} 
+        onLongPress={() => {
           Vibration.vibrate(70);
           setIsPressed(true);
           setShowThrash(true)
-          dispatch(selectedFolder({id, name}))
-          
-}}>
+          handlePress();
+          dispatch(selectedFolder({id, name}))        
+          }}>
           <>
           <View style = {styles.header} >
             <Ionaicons name="folder-open-outline" style = {styles.icon}></Ionaicons>
