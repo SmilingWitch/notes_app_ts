@@ -15,7 +15,7 @@ interface Folder {
 export interface UserState {
   notes: Note[];
   folder: Folder[],
-  selectedFolderID: [],
+  selectedFolderID: any[],
   selectedNoteID: number
 }
 
@@ -59,9 +59,12 @@ const userSlice = createSlice({
     clearSelectedFolder: (state, action) => {
       state.selectedFolderID = []
     },
+    clearSelectedFolderById: (state, action) => {
+      const folderId = action.payload
+      state.selectedFolderID = state.selectedFolderID.filter((folder: any) => folder.id !== folderId)
+    },
     selectedNote: (state, action) => {
       const noteId = action.payload;
-      console.log(noteId)
       state.selectedNoteID = noteId;
     },
     
@@ -97,5 +100,6 @@ export const {  addNote,
                 deleteFolder, 
                 selectedFolder, 
                 selectedNote,
-                clearSelectedFolder } = userSlice.actions;
+                clearSelectedFolder,
+                clearSelectedFolderById } = userSlice.actions;
 export default userSlice.reducer;
