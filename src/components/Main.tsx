@@ -19,7 +19,7 @@ const Main = () => {
                     <Stack.Screen
                         name = "Notes"
                         component={ Notes }
-                        initialParams={{ name: 'All'}}
+                        initialParams={{ name: 'All', category_name : "All"}}
                         options={{ headerShown: false }}
                     />
                     <Stack.Screen 
