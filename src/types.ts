@@ -54,13 +54,17 @@ export interface FolderProps {
     name: string,
     amount: number,
     navigation: NativeStackNavigationProp<ParamListBase>;
-    id: number
+    id: number,
+    
+
 }
 export interface FolderPropsWithoutTouch {
     name: string,
     amount: number,
     id: number,
     setShowThrash: React.Dispatch<React.SetStateAction<boolean>>
+    selectedItems: number[],
+    setSelectedItems: React.Dispatch<React.SetStateAction<number[]>>,
 }
 
 export interface NotesFolderListProps{
@@ -117,7 +121,6 @@ export interface AppBarProps {
 // Scroll Bar
 export interface CategoryItemProps {
     name: string,
-    amount: number,
     active:  boolean,
     navigation: NativeStackNavigationProp<ParamListBase>;
 }
