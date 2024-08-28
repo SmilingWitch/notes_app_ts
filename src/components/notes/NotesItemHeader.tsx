@@ -1,21 +1,36 @@
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, TouchableOpacity } from "react-native"
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
 import ScrollCategories from "./ScrollCategories";
 import { AppBarProps } from "../../types";
-
+import Icon from '@expo/vector-icons/AntDesign' 
+import Icon1 from '@expo/vector-icons/FontAwesome'
+import { useDispatch, useSelector } from "react-redux";
+import { deleteNote, selectedNote } from "../../store/reducers";
 
 const NotesItemHeader = ({navigation, route}: AppBarProps) => {
+
+    const selected = useSelector((state : any) => state.selectedNoteID)
+    const dispatch = useDispatch()
+    console.log(selected)
     return(
         <View style = {styles.container}>
-
         <View style = {styles.header}>
             <View style = {styles.name}>
                 <StyledText fontSize='h2' fontWeight='bold'>Fast Notes</StyledText> 
             </View>
-            {/*<TouchableOpacity>
+            {selected !== 0 ?
+                <TouchableOpacity onPress={() => 
+                    { dispatch(deleteNote(selected))
+                      dispatch(selectedNote(0))
+                }}>
+                <Icon1 name = "trash-o" style = {styles.icon}></Icon1>
+            </TouchableOpacity> :
+            <TouchableOpacity>
                 <Icon name = "ellipsis1" style = {styles.icon}></Icon>
-            </TouchableOpacity>*/}
+            </TouchableOpacity>
+            }
+            
         </View>
         
         <View>
