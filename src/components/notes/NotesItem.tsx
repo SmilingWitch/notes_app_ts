@@ -1,22 +1,35 @@
-import { View,StyleSheet, Dimensions, TouchableOpacity } from "react-native"
+import { View,StyleSheet, Dimensions, TouchableOpacity, Vibration } from "react-native"
 import Icon from '@expo/vector-icons/AntDesign'
 import StyledText from "../common/StyledText";
 import lighTeme from "../../lightTheme";
 import { NotesItemProps } from "../../types";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectedNote } from "../../store/reducers";
 
 
 const NotesItem = ({ id, navigation, name, content, date, route}: NotesItemProps) => {
 
     const { category_name } = route.params;
+    
+    const dispatch = useDispatch()
+    const isPressed = useSelector((state : any ) => state.selectedNoteID)
+
 
     return(
-        <TouchableOpacity style = {styles.container} onPress = {() => {
-            navigation.navigate('Note', {
+        <TouchableOpacity style = {isPressed === id ? styles.isPressed :styles.container} 
+            onPress = {() => {
+                navigation.navigate('Note', {
                                         name: name, 
                                         content: content, 
                                         category_name: category_name,
                                         new_note: false,
-                                        id: id})}}>
+                                        id: id})}}
+                                        onLongPress={() => {
+                                            Vibration.vibrate(70);
+                                            dispatch(selectedNote(id))
+                                            /*setShowThrash(true)*/}}
+>
             <View>
                 <View style = {styles.header}>
                     <StyledText fontSize='h2' fontWeight='bold'>{name}</StyledText>
@@ -46,7 +59,7 @@ const styles = StyleSheet.create({
         marginBottom: 12,
         borderRadius: 20,
         padding: 10,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     text : {
         marginVertical: 10,
@@ -66,6 +79,16 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         height: 30,
         alignItems: 'center'
+      },
+      isPressed: {
+        backgroundColor: "black",
+        minHeight: 150,
+        maxHeight: 200,
+        width: Dimensions.get('window').width / 2.2 ,
+        marginBottom: 12,
+        borderRadius: 20,
+        padding: 10,
+        justifyContent: 'space-between'
       }
 })
 
