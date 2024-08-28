@@ -4,16 +4,23 @@ import NotesFolderItemWithoutTouch from "./NotesFolderItemWithoutTouch"
 import lighTeme from "../../lightTheme"
 import { NotesFolderListProps } from "../../types"
 import { useSelector } from "react-redux"
+import { useState } from "react"
 
 const NotesFolderList = ({navigation, touch, setShowThrash}: NotesFolderListProps) => {
     
     const folders = useSelector((state: any) => state.folder)
+    const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
-    console.log(folders)
+    console.log("SELECTED ITEMS",selectedItems)
     
     const renderItem = ({item}: any) => (
         touch === true ? <NotesFolderItem name = {item.name} amount = {3} navigation = {navigation} id = {item.id}/>:
-                          <NotesFolderItemWithoutTouch name = {item.name} amount = {3} id = {item.id} setShowThrash = {setShowThrash}/>
+                          <NotesFolderItemWithoutTouch  name = {item.name} 
+                                                        amount = {3} 
+                                                        id = {item.id} 
+                                                        setShowThrash = {setShowThrash}
+                                                        setSelectedItems = {setSelectedItems}
+                                                        selectedItems = {selectedItems}/>
     )
 
 
