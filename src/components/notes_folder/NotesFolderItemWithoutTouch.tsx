@@ -9,9 +9,13 @@ import { useBackHandler } from "../../functions/useBackHandler"
 
 const NotesFolderItemWithoutTouch = ({name, amount, id, setShowThrash, selectedItems, setSelectedItems}:  FolderPropsWithoutTouch) => {
 
-  const { isSelected, handlePressItem,selected } = useFolderSelection(id, name, selectedItems,setSelectedItems, setShowThrash);
+  const { isSelected, handlePressItem,selected } = useFolderSelection({id, 
+                                                                      name, 
+                                                                      selectedItems,
+                                                                      setSelectedItems, 
+                                                                      setShowThrash});
 
-  useBackHandler( selectedItems, setSelectedItems, setShowThrash, selected );
+  useBackHandler( {selectedItems, setSelectedItems, setShowThrash, selected} );
 
     return(
         <TouchableOpacity style = {isSelected ? styles.isPressed : styles.container} 
