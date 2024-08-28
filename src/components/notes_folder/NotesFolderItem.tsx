@@ -3,9 +3,6 @@ import Ionaicons from '@expo/vector-icons/Ionicons'
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
 import {  FolderProps } from "../../types"
-import { useState } from "react"
-import { useDispatch } from "react-redux"
-import { deleteNote } from "../../store/reducers"
 
 
 const NotesFolderItem = ({name, amount, navigation, id}: FolderProps) => {
