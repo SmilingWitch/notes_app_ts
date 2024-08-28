@@ -1,4 +1,4 @@
-import { View,StyleSheet, TouchableOpacity,BackHandler } from "react-native"
+import { StyleSheet, TouchableOpacity,BackHandler,TouchableWithoutFeedback, View } from "react-native"
 import { useState, useEffect } from "react"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { ParamListBase } from "@react-navigation/native"
@@ -10,7 +10,7 @@ import Icon from '@expo/vector-icons/Feather'
 import CreateFolder from "../components/manage_folder/CreateFolder"
 import Icon1 from '@expo/vector-icons/FontAwesome'
 import { useDispatch, useSelector } from "react-redux"
-import { deleteFolder } from "../store/reducers"
+import { clearSelectedFolder, deleteFolder } from "../store/reducers"
 
 interface Props{
     navigation: NativeStackNavigationProp<ParamListBase>
@@ -23,6 +23,7 @@ const ManageFolders = ({navigation}: Props) => {
     const [showTrash, setShowThrash] = useState(false)
     const dispatch = useDispatch()
     const selectedFolder = useSelector((state: any) => state.selectedFolderID)
+    
 
     console.log("selectedFolder", selectedFolder)
     // for close CreateFolder component when the user press back button
@@ -46,22 +47,26 @@ const ManageFolders = ({navigation}: Props) => {
       }, [showDialog]);
 
     return(
-        <View style = {styles.container}>
+        <TouchableWithoutFeedback onPress={() => dispatch(clearSelectedFolder()) } >
+          <View style = {styles.container}>
             <ManageFolderHeader navigation={navigation}/>
-            <NotesFolderList navigation = {navigation} touch = {false} setShowThrash = {setShowThrash}/>
-            {showTrash ?
-            <TouchableOpacity style = {styles.create_folder} onPress = {() => {setShowThrash(false);
-              dispatch(deleteFolder(selectedFolder))
-            }}>
-                <Icon1 name = "trash-o" style = {styles.icon}></Icon1>
-                <StyledText>Delete Folder</StyledText>
-            </TouchableOpacity> :
-            <TouchableOpacity style = {styles.create_folder} onPress = {() => setShowDialog(true)}>
-                <Icon name="plus" style = {styles.icon}></Icon>
-                <StyledText>Create Folder</StyledText>
-            </TouchableOpacity>}
-            {showDialog && <CreateFolder setShowDialog = {setShowDialog} />}
-        </View>
+              <NotesFolderList navigation = {navigation} touch = {false} setShowThrash = {setShowThrash}/>
+              {showTrash ?
+              <TouchableOpacity style = {styles.create_folder} onPress = {() => {setShowThrash(false);
+                dispatch(deleteFolder(selectedFolder))
+              }}>
+                  <Icon1 name = "trash-o" style = {styles.icon}></Icon1>
+                  <StyledText>Delete Folder</StyledText>
+              </TouchableOpacity> :
+              <TouchableOpacity style = {styles.create_folder} onPress = {() => setShowDialog(true)}>
+                  <Icon name="plus" style = {styles.icon}></Icon>
+                  <StyledText>Create Folder</StyledText>
+              </TouchableOpacity>}
+              {showDialog && <CreateFolder setShowDialog = {setShowDialog} />}
+
+            </View>
+            
+        </TouchableWithoutFeedback>
     )
 }
 
