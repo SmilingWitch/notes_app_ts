@@ -47,8 +47,7 @@ const ManageFolders = ({navigation}: Props) => {
       }, [showDialog]);
 
     return(
-        <TouchableWithoutFeedback onPress={() => dispatch(clearSelectedFolder()) } >
-          <View style = {styles.container}>
+        <View style = {styles.container}>
             <ManageFolderHeader navigation={navigation}/>
               <NotesFolderList navigation = {navigation} touch = {false} setShowThrash = {setShowThrash}/>
               {showTrash ?
@@ -62,11 +61,8 @@ const ManageFolders = ({navigation}: Props) => {
                   <Icon name="plus" style = {styles.icon}></Icon>
                   <StyledText>Create Folder</StyledText>
               </TouchableOpacity>}
-              {showDialog && <CreateFolder setShowDialog = {setShowDialog} />}
-
-            </View>
-            
-        </TouchableWithoutFeedback>
+              {showDialog && <CreateFolder setShowDialog = {setShowDialog} />}            
+        </View>
     )
 }
 
