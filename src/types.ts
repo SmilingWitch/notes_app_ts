@@ -135,8 +135,10 @@ export interface NotesItemProps{
     name: string,
     content: string,
     date: any,
-    navigation: NativeStackNavigationProp<ParamListBase>;
-    route: RouteProp<NotesItemParameters, 'Notes'>
+    navigation: NativeStackNavigationProp<ParamListBase>,
+    route: RouteProp<NotesItemParameters, 'Notes'>,
+    setSelectedNotes: React.Dispatch<React.SetStateAction<number[]>>,
+    selectedNotes: number[]
 }
 
 
