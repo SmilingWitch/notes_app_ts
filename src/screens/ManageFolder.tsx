@@ -1,5 +1,5 @@
-import { StyleSheet, TouchableOpacity,BackHandler,TouchableWithoutFeedback, View } from "react-native"
-import { useState, useEffect } from "react"
+import { StyleSheet, TouchableOpacity, View } from "react-native"
+import { useState } from "react"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { ParamListBase } from "@react-navigation/native"
 import ManageFolderHeader from "../components/manage_folder/ManageFolderHeader"
@@ -10,7 +10,8 @@ import Icon from '@expo/vector-icons/Feather'
 import CreateFolder from "../components/manage_folder/CreateFolder"
 import Icon1 from '@expo/vector-icons/FontAwesome'
 import { useDispatch, useSelector } from "react-redux"
-import { clearSelectedFolder, deleteFolder } from "../store/reducers"
+import { deleteFolder } from "../store/reducers"
+import { useBackCreateFolderHandler } from "../hooks/useBackCreateFolderHandler"
 
 interface Props{
     navigation: NativeStackNavigationProp<ParamListBase>
@@ -23,28 +24,7 @@ const ManageFolders = ({navigation}: Props) => {
     const [showTrash, setShowThrash] = useState(false)
     const dispatch = useDispatch()
     const selectedFolder = useSelector((state: any) => state.selectedFolderID)
-    
-
-    console.log("selectedFolder", selectedFolder)
-    // for close CreateFolder component when the user press back button
-    useEffect(() => {
-
-        const handleBackPress = () => {
-          if (showDialog) {
-            setShowDialog(false);
-            return true; // Prevenir el comportamiento por defecto
-          }
-          return false;
-        };
-    
-        if (showDialog) {
-          BackHandler.addEventListener('hardwareBackPress', handleBackPress);
-        } else {
-          BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-        }
-    
-        return () => BackHandler.removeEventListener('hardwareBackPress', handleBackPress);
-      }, [showDialog]);
+    useBackCreateFolderHandler({showDialog, setShowDialog})
 
     return(
         <View style = {styles.container}>
