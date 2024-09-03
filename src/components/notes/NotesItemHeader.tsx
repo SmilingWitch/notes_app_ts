@@ -6,24 +6,24 @@ import { AppBarProps } from "../../types";
 import Icon from '@expo/vector-icons/AntDesign' 
 import Icon1 from '@expo/vector-icons/FontAwesome'
 import { useDispatch, useSelector } from "react-redux";
-import { deleteNote, selectedNote } from "../../store/reducers";
+import { deleteNote} from "../../store/reducers";
 
 const NotesItemHeader = ({navigation, route}: AppBarProps) => {
 
     const selected = useSelector((state : any) => state.selectedNoteID)
     const dispatch = useDispatch()
-    console.log(selected)
+
+    console.log("LENGTH",selected.length)
+
     return(
         <View style = {styles.container}>
         <View style = {styles.header}>
             <View style = {styles.name}>
                 <StyledText fontSize='h2' fontWeight='bold'>Fast Notes</StyledText> 
             </View>
-            {selected !== 0 ?
+            {selected.length >= 1  ? // porque no pude quitarle el 0 del inicio del arreglo
                 <TouchableOpacity onPress={() => 
-                    { dispatch(deleteNote(selected))
-                      dispatch(selectedNote(0))
-                }}>
+                    { dispatch(deleteNote(selected))}}>
                 <Icon1 name = "trash-o" style = {styles.icon}></Icon1>
             </TouchableOpacity> :
             <TouchableOpacity>
