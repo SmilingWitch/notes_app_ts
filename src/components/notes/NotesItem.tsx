@@ -3,21 +3,55 @@ import Icon from '@expo/vector-icons/AntDesign'
 import StyledText from "../common/StyledText";
 import lighTeme from "../../lightTheme";
 import { NotesItemProps } from "../../types";
-import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectedNote } from "../../store/reducers";
+import { clearSelectedNote, clearSelectedNoteById, selectedNote } from "../../store/reducers";
+import { useBackHandler } from "../../hooks/useBackHandler";
+import { useState } from "react";
 
 
-const NotesItem = ({ id, navigation, name, content, date, route}: NotesItemProps) => {
+const NotesItem = ({ id, 
+                     navigation, 
+                     name, 
+                     content, 
+                     date, 
+                     route,
+                     setSelectedNotes,
+                     selectedNotes }: NotesItemProps) => {
 
     const { category_name } = route.params;
     
     const dispatch = useDispatch()
     const isPressed = useSelector((state : any ) => state.selectedNoteID)
 
+    console.log("selectedNotes",selectedNotes)
+   
+    const isSelected = selectedNotes.includes(id);
+    const [ShowThrash,setShowThrash] = useState(false)
+
+    console.log("SELECTED NOTES",isSelected)
+
+    const selected = useSelector((state: any) => state.selectedNoteID);
+    console.log("ISSELECTED",selected)
+    const selectNote = (id: number) => {
+        if(isSelected){
+            dispatch(clearSelectedNoteById(id))
+            setSelectedNotes(selectedNotes.filter((itemId : number) => itemId !== id));
+            console.log("is selected")
+        }else{
+            dispatch(selectedNote({id: id}))
+            console.log("is not selected")
+            setSelectedNotes([...selectedNotes, id]);
+        }
+    }
+
+    useBackHandler(     {selectedItems: selectedNotes, 
+                        setSelectedItems: setSelectedNotes, 
+                        setShowThrash, selected,  dispatchfunction: clearSelectedNote} );
+
+
 
     return(
-        <TouchableOpacity style = {isPressed === id ? styles.isPressed :styles.container} 
+        <TouchableOpacity style = {isSelected ? styles.isPressed :styles.container} 
             onPress = {() => {
                 navigation.navigate('Note', {
                                         name: name, 
@@ -26,14 +60,13 @@ const NotesItem = ({ id, navigation, name, content, date, route}: NotesItemProps
                                         new_note: false,
                                         id: id})}}
                                         onLongPress={() => {
-                                            Vibration.vibrate(70);
-                                            dispatch(selectedNote(id))
-                                            /*setShowThrash(true)*/}}
+                                        Vibration.vibrate(70);
+                                        selectNote(id)}}
 >
             <View>
                 <View style = {styles.header}>
-                    <StyledText fontSize='h2' fontWeight='bold'>{name}</StyledText>
-                    <Icon name="pushpino" style = {styles.icon}></Icon>
+                    <StyledText fontSize='h3' fontWeight='bold'>{name}</StyledText>
+                    {/*<Icon name="pushpino" style = {styles.icon}></Icon>*/}
                 </View>
                 <View style = {styles.text}>
                     <StyledText>{content}</StyledText> 
