@@ -5,7 +5,9 @@ import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
 import { FolderPropsWithoutTouch } from "../../types"
 import { useFolderSelection } from "../../hooks/useFolderSelection"
-import { useBackHandler } from "../../functions/useBackHandler"
+import { useBackHandler } from "../../hooks/useBackHandler"
+import { clearSelectedFolder } from "../../store/reducers";
+
 
 const NotesFolderItemWithoutTouch = ({name, amount, id, setShowThrash, selectedItems, setSelectedItems}:  FolderPropsWithoutTouch) => {
 
@@ -15,7 +17,7 @@ const NotesFolderItemWithoutTouch = ({name, amount, id, setShowThrash, selectedI
                                                                       setSelectedItems, 
                                                                       setShowThrash});
 
-  useBackHandler( {selectedItems, setSelectedItems, setShowThrash, selected} );
+  useBackHandler( {selectedItems, setSelectedItems, setShowThrash, selected,  dispatchfunction: clearSelectedFolder} );
 
     return(
         <TouchableOpacity style = {isSelected ? styles.isPressed : styles.container} 
