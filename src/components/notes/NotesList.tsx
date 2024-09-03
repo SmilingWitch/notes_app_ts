@@ -17,6 +17,7 @@ const NotesList = ({navigation, route}: NotesListProps) => {
 
     // Memoriza los datos filtrados usando useMemo
     const {filteredData} = filterData({notes, category_name})
+    const [selectedNotes, setSelectedNotes] = useState<number[]>([]);
 
     useEffect(() => {
       setNumColumns(2);
@@ -28,7 +29,9 @@ const NotesList = ({navigation, route}: NotesListProps) => {
                     name={item.title} 
                     content={item.content} 
                     route = {route}
-                    date = {item.date}/>   
+                    date = {item.date}
+                    setSelectedNotes = {setSelectedNotes}
+                    selectedNotes = {selectedNotes}/>   
     )
 
     return(
