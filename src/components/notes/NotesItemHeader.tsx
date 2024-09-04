@@ -13,8 +13,6 @@ const NotesItemHeader = ({navigation, route}: AppBarProps) => {
     const selected = useSelector((state : any) => state.selectedNoteID)
     const dispatch = useDispatch()
 
-    console.log("LENGTH",selected.length)
-
     return(
         <View style = {styles.container}>
         <View style = {styles.header}>
