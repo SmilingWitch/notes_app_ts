@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearSelectedNote, clearSelectedNoteById, selectedNote } from "../../store/reducers";
 import { useBackHandler } from "../../hooks/useBackHandler";
 import { useState } from "react";
+import { formatedDate } from "../../functions/formatedDate";
 
 
 const NotesItem = ({ id, 
@@ -21,34 +22,25 @@ const NotesItem = ({ id,
     const { category_name } = route.params;
     
     const dispatch = useDispatch()
-    const isPressed = useSelector((state : any ) => state.selectedNoteID)
-
-    console.log("selectedNotes",selectedNotes)
-   
     const isSelected = selectedNotes.includes(id);
     const [ShowThrash,setShowThrash] = useState(false)
 
-    console.log("SELECTED NOTES",isSelected)
-
     const selected = useSelector((state: any) => state.selectedNoteID);
-    console.log("ISSELECTED",selected)
     const selectNote = (id: number) => {
         if(isSelected){
             dispatch(clearSelectedNoteById(id))
             setSelectedNotes(selectedNotes.filter((itemId : number) => itemId !== id));
-            console.log("is selected")
         }else{
             dispatch(selectedNote({id: id}))
-            console.log("is not selected")
             setSelectedNotes([...selectedNotes, id]);
         }
     }
+    const {day, month, year} = formatedDate(date)
+    useBackHandler({selectedItems: selectedNotes, 
+                    setSelectedItems: setSelectedNotes, 
+                    setShowThrash, selected,  dispatchfunction: clearSelectedNote} );
 
-    useBackHandler(     {selectedItems: selectedNotes, 
-                        setSelectedItems: setSelectedNotes, 
-                        setShowThrash, selected,  dispatchfunction: clearSelectedNote} );
-
-
+        
 
     return(
         <TouchableOpacity style = {isSelected ? styles.isPressed :styles.container} 
@@ -75,8 +67,8 @@ const NotesItem = ({ id,
             </View>
                 
             <View style = {styles.footer}>
-                <StyledText fontSize='small'>{date}</StyledText>
-                <Icon name="ellipsis1" style = {styles.icon}></Icon>
+                <StyledText fontSize='small'>{day}/{month}/{year}</StyledText>
+                {/*<Icon name="ellipsis1" style = {styles.icon}></Icon>*/}
             </View>
         </TouchableOpacity>
     )
