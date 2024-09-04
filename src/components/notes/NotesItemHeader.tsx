@@ -17,7 +17,7 @@ const NotesItemHeader = ({navigation, route}: AppBarProps) => {
         <View style = {styles.container}>
         <View style = {styles.header}>
             <View style = {styles.name}>
-                <StyledText fontSize='h2' fontWeight='bold'>Fast Notes</StyledText> 
+                <StyledText fontSize='h2' fontWeight='bold'>Notella</StyledText> 
             </View>
             {selected.length >= 1  ? // porque no pude quitarle el 0 del inicio del arreglo
                 <TouchableOpacity onPress={() => 
