@@ -6,6 +6,7 @@ import Appbar from "../components/notes/Appbar";
 import { RouteProp } from "@react-navigation/native";
 import NotesItemHeader from "../components/notes/NotesItemHeader";
 import NotesList from "../components/notes/NotesList";
+import { useSelector } from "react-redux";
 
 
 interface Params extends ParamListBase{
@@ -19,12 +20,15 @@ interface Props {
   }
 
 const Notes = ({navigation, route}: Props) => {
+
+    const selectedNote = useSelector((state : any) => state.selectedNoteID)
+    console.log(selectedNote.length)
     
     return(
         <View style={styles.container}>
             <NotesItemHeader navigation = {navigation} route = {route}></NotesItemHeader>
             <NotesList navigation = {navigation} route = {route}/>
-            <Appbar navigation = {navigation} route = {route}></Appbar>
+            {selectedNote.length === 0 && <Appbar navigation = {navigation} route = {route}></Appbar>}
         </View>
         
     )
