@@ -6,9 +6,18 @@ import Notes from "../screens/Notes"
 import NotesFolder from "../screens/NotesFolder";
 import Note from "../screens/Note";
 import ManageFolders from "../screens/ManageFolder";
+import MyDrawer from "./Drawer";
 
 
-const Stack = createNativeStackNavigator()
+type RootStackParamList = {
+    Notes: { category_name: string, name: string };
+    NotesFolder: undefined;
+    ManageFolders: undefined;
+    Note: undefined;
+    Drawer: undefined
+  };
+
+const Stack = createNativeStackNavigator<RootStackParamList>()
 
 const Main = () => {
 
@@ -17,15 +26,9 @@ const Main = () => {
             <NavigationContainer>
                 <Stack.Navigator>
                     <Stack.Screen
-                        name = "Notes"
-                        component={ Notes }
-                        initialParams={{ name: 'All', category_name : "All"}}
+                        name = "Drawer"
+                        component={ MyDrawer}
                         options={{ headerShown: false }}
-                    />
-                    <Stack.Screen 
-                        name="NotesFolder"
-                        component={NotesFolder} 
-                        options={{ headerShown: false }} // Mostrar el AppBar
                     />
                     <Stack.Screen 
                         name="ManageFolders"
