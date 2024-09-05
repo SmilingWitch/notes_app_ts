@@ -7,6 +7,7 @@ import Icon from '@expo/vector-icons/AntDesign'
 import Icon1 from '@expo/vector-icons/FontAwesome'
 import { useDispatch, useSelector } from "react-redux";
 import { deleteNote} from "../../store/reducers";
+import { DrawerActions } from "@react-navigation/native";
 
 const NotesItemHeader = ({navigation, route}: AppBarProps) => {
 
@@ -14,7 +15,7 @@ const NotesItemHeader = ({navigation, route}: AppBarProps) => {
     const dispatch = useDispatch()
 
     return(
-        <View style = {styles.container}>
+        <View style = {styles.container} >
         <View style = {styles.header}>
             <View style = {styles.name}>
                 <StyledText fontSize='h2' fontWeight='bold'>Notella</StyledText> 
@@ -24,7 +25,7 @@ const NotesItemHeader = ({navigation, route}: AppBarProps) => {
                     { dispatch(deleteNote(selected))}}>
                 <Icon1 name = "trash-o" style = {styles.icon}></Icon1>
             </TouchableOpacity> :
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
                 <Icon name = "ellipsis1" style = {styles.icon}></Icon>
             </TouchableOpacity>
             }
