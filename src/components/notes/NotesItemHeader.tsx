@@ -20,15 +20,21 @@ const NotesItemHeader = ({navigation, route}: AppBarProps) => {
             <View style = {styles.name}>
                 <StyledText fontSize='h2' fontWeight='bold'>Notella</StyledText> 
             </View>
-            {selected.length >= 1  ? // porque no pude quitarle el 0 del inicio del arreglo
-                <TouchableOpacity onPress={() => 
-                    { dispatch(deleteNote(selected))}}>
-                <Icon1 name = "trash-o" style = {styles.icon}></Icon1>
-            </TouchableOpacity> :
-            <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
-                <Icon name = "ellipsis1" style = {styles.icon}></Icon>
-            </TouchableOpacity>
-            }
+            <View style = {styles.icon_cont}>
+                <TouchableOpacity /*onPress = {() => navigation.navigate('')}*/>
+                    <Icon name = "search1" style = {styles.icon}></Icon>
+                </TouchableOpacity>
+
+                {selected.length >= 1  ? // porque no pude quitarle el 0 del inicio del arreglo
+                    <TouchableOpacity onPress={() => 
+                        { dispatch(deleteNote(selected))}}>
+                    <Icon1 name = "trash-o" style = {styles.icon}></Icon1>
+                </TouchableOpacity> :
+                <TouchableOpacity onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+                    <Icon name = "ellipsis1" style = {styles.icon}></Icon>
+                </TouchableOpacity>
+                }
+            </View>
             
         </View>
         
@@ -60,7 +66,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
     },
-    
+    icon_cont: {
+        flexDirection: 'row',
+        gap: 15
+    }
 
 })
 
