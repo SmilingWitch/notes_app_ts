@@ -1,4 +1,4 @@
-import { View, StyleSheet, TouchableOpacity, Vibration} from "react-native"
+import { View, StyleSheet, TouchableOpacity, Vibration, Dimensions} from "react-native"
 import Ionaicons from '@expo/vector-icons/Ionicons'
 import StyledText from "../common/StyledText"
 import lighTeme from "../../lightTheme"
@@ -9,12 +9,12 @@ const NotesFolderItem = ({name, amount, navigation, id}: FolderProps) => {
 
   
     return(
-        <TouchableOpacity style = {styles.container} 
+        <View style = {styles.container} 
         
-        onPress={() => navigation.navigate('Notes', {
+        /*onPress={() => navigation.navigate('Notes', {
           name: name,
           category_name: name
-        })}>
+        })}*/>
           <>
           <View style = {styles.header}  >
             <Ionaicons name="folder-open-outline" style = {styles.icon}></Ionaicons>
@@ -25,17 +25,18 @@ const NotesFolderItem = ({name, amount, navigation, id}: FolderProps) => {
             </View>
           </>
             
-        </TouchableOpacity>
+        </View>
     )
 }
 const styles = StyleSheet.create({
         container: {
-            marginBottom: 10,
-            padding: 10,
             borderRadius: 20,
+            paddingHorizontal: 8,
             flexDirection: 'row',
             justifyContent: 'space-between',
-            alignItems: 'center'
+            alignItems: 'center',
+            width: Dimensions.get('window').width * 0.67,
+            left: -7
         },
       header: {
         alignItems: 'center',
