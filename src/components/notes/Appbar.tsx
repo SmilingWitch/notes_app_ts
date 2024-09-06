@@ -11,46 +11,32 @@ const Appbar = ({navigation, route}: AppBarProps) => {
 
 
     return(
-        <View style = {styles.container}>
-            <TouchableOpacity onPress = {() => navigation.navigate('NotesFolder')}>
-                <Icon1 name = "folder-o" style = {styles.icon}></Icon1>
-            </TouchableOpacity>
-            <TouchableOpacity onPress = {() => navigation.navigate('')}>
-                <Icon name = "setting" style = {styles.icon}></Icon>
-            </TouchableOpacity>
-            <TouchableOpacity style = {styles.icon_pluss} onPress={() => navigation.navigate('Note', {name: "Untiteled Note", content: "", category_name: category_name, new_note: true})}>
-                <Icon name = "plus" style = {styles.icon}></Icon>
-            </TouchableOpacity>
-            <TouchableOpacity onPress = {() => navigation.navigate('')}>
-                <Icon1 name = "trash-o" style = {styles.icon}></Icon1>
-            </TouchableOpacity>
-            <Icon name = "search1" style = {styles.icon}></Icon>
-        </View>
+    
+        <TouchableOpacity style = {styles.icon_pluss} onPress={() => navigation.navigate('Note', {name: "Untiteled Note", content: "", category_name: category_name, new_note: true})}>
+            <Icon name = "plus" style = {styles.icon}></Icon>
+        </TouchableOpacity>
+
     )
 }
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: lighTeme.colors.grey,
-        height: 60,
-        flexDirection: 'row',
-        padding: 15,
-        justifyContent: 'space-between'
-    },
+
     icon: {
         fontSize: lighTeme.fontSize.h2,
         color: lighTeme.colors.textPrimary
     },
     icon_pluss:{
+        position: 'absolute',
         fontSize: lighTeme.fontSize.h2,
         backgroundColor: lighTeme.colors.secundary,
-        width: 50,
-        height: 50,
-        bottom: 20,
+        width: 60,
+        height: 60,
+        right:30,
+        bottom: 30,
         alignItems: 'center',
         justifyContent: 'center',
-        borderRadius: 1000
-        
+        borderRadius: 1000,
+        alignSelf: 'flex-end'
     }
 })
 
