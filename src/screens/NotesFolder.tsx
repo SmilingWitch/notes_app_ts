@@ -1,10 +1,9 @@
 
-import { View, StyleSheet } from "react-native"
+import { View, StyleSheet, Dimensions } from "react-native"
 import lighTeme from "../lightTheme"
 import { NativeStackNavigationProp } from "@react-navigation/native-stack"
 import { ParamListBase } from "@react-navigation/native"
-import NotesFolderHeader from "../components/notes_folder/NotesFolderHeader"
-import NotesFolderList from "../components/notes_folder/NotesFolderList"
+import NotesFolderListWithMap from "../components/notes_folder/NotesFolderListWittMap"
 
 interface Props{
     navigation: NativeStackNavigationProp<ParamListBase>;
@@ -14,8 +13,7 @@ interface Props{
 const NotesFolder = ({navigation}: Props) => {
     return(
         <View style = {styles.container}>
-            <NotesFolderHeader navigation = {navigation} />
-            <NotesFolderList navigation = {navigation} touch = {true}/>
+            <NotesFolderListWithMap navigation = {navigation}/>
         </View>
         
     )
@@ -25,7 +23,8 @@ const NotesFolder = ({navigation}: Props) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: lighTeme.colors.primary
+        backgroundColor: lighTeme.colors.primary,
+        
     }
     
 })
