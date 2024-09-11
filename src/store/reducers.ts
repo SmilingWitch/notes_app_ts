@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 
 interface Note {
   id: number;
@@ -16,14 +17,37 @@ export interface UserState {
   notes: Note[];
   folder: Folder[],
   selectedFolderID: any[],
-  selectedNoteID: any[]
+  selectedNoteID: any[],
+  noteStyles: {}
+}
+
+class NoteRange {
+  public start: number;
+  public end: number;
+
+  constructor(start: number, end: number) {
+    this.start = start;
+    this.end = end;
+  }
+  // Método para generar el objeto en el formato deseado
+  toObject(noteId: string, style: string) {
+    return {
+      [noteId]: {
+        [style]: [{
+          start: this.start,
+          end: this.end,
+        },]
+      },
+    };
+  }
 }
 
 const initialState: UserState = {
   notes: [],
   folder: [],
   selectedFolderID: [],
-  selectedNoteID: []
+  selectedNoteID: [],
+  noteStyles: {}
 };
 
 const userSlice = createSlice({
@@ -72,9 +96,70 @@ const userSlice = createSlice({
     selectedNote: (state, action) => {
       const noteId = action.payload;
       state.selectedNoteID.push(noteId);
-      /*state.selectedNoteID = []*/
     },
+    addNotesStyle: (state, action) => {
+      const style = action.payload.style; // El estilo (bold, italic, etc.)
+      const selected = action.payload.selected; // El rango seleccionado
+      const noteId = 'note_id'; // Puedes cambiar esto a tu nota específica
+      const noteStyles = state.noteStyles; // El estado actual de los estilos
+    
+      // Crea un nuevo rango basado en la selección
+      let range = new NoteRange(selected.start, selected.end);
+      const newRangeObject = range.toObject(noteId, style); // Genera el objeto de rango
+    
+      const isEmpty = (obj: any) => Object.keys(obj).length === 0; // Función para comprobar si un objeto está vacío
+    
+      // Si no hay estilos en la nota, agregar el nuevo estilo directamente
+      if (isEmpty(noteStyles)) {
+        state.noteStyles = newRangeObject; // Insertamos el objeto con el nuevo rango
+      } else {
+        // Si ya hay estilos para la nota, verificar si el estilo actual existe (e.g., 'bold')
+        if (noteStyles[noteId] && noteStyles[noteId][style]) {
+          // Verificar si el rango ya existe
+          const rangeExists = noteStyles[noteId][style].some((range: { start: number; end: number }) => {
+            return range.start === selected.start && range.end === selected.end;
+          });
+    
+          // Si el rango ya existe, lo eliminamos
+          if (rangeExists) {
+            noteStyles[noteId][style] = noteStyles[noteId][style].filter((range: { start: number; end: number }) => {
+              return !(range.start === selected.start && range.end === selected.end);
+            });
+            console.log('El rango existente ha sido eliminado');
+          } else {
+            // Si no existe, agregamos el nuevo rango
+            noteStyles[noteId][style].push({ start: selected.start, end: selected.end });
+            console.log('Nuevo rango agregado');
+          }
+        } else {
+          // Si el estilo no existe aún, creamos el array con el nuevo rango
+          noteStyles[noteId] = {
+            ...noteStyles[noteId],
+            [style]: [{ start: selected.start, end: selected.end }]
+          };
+        }
+      }
+      console.log("NOTE STYLES",noteStyles.note_id.bold)
+    }
+    
+    ,
+    
+    
+        /*state.noteStyles = {
+          note_id: {
+            bold: [{
+              start: 0,
+              end: 0,
+            },]
+          },
+        }
+      console.log("NOTE STYLES",noteStyles.note_id.bold) */
+    
+    
+    
 
+   
+    
     clearSelectedNote: (state, action) => {
       state.selectedNoteID = []
     },
@@ -130,6 +215,7 @@ export const {  addNote,
                 deleteFolder, 
                 selectedFolder, 
                 selectedNote,
+                addNotesStyle,
                 clearSelectedFolder,
                 clearSelectedFolderById,
                 clearSelectedNote,
