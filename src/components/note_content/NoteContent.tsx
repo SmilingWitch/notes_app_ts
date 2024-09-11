@@ -29,39 +29,49 @@ const NoteContent = ({route, setInput}: NoteContentProps) => {
         };
         const dispatch = useDispatch()
         const noteStyles = useSelector((state: any) => state.noteStyles)
+        
+        console.log("NOTE STYLES", noteStyles.note_id.bold)
 
         useEffect(() => {
-          const format = applyStyles(noteStyles,content)
+          const format = applyStyles(noteStyles,content, noteStyles.note_id.bold[0])
           setFormattedText(format)
-          console.log("SE ELECUTO")
+
 
         }, [])
 
         
 
-        console.log(noteStyles.note_id.bold)
+       
+
 
         const createRange =  (selected: any, style: string) =>{
           if(selected.start !== selected.end){
             dispatch(addNotesStyle({style: style, selected: selected, noteStyles: noteStyles}))
-            const format = applyStyles(noteStyles, content)
+            const format = applyStyles(noteStyles, content, selected)
             setFormattedText(format)
           }
         }
 
         const getSelectedText = (text: string, selection: { start: number; end: number }) => {
+
+
           const beforeText = text.substring(0, selection.start - 1);
           const selectedText = text.substring(selection.start - 1, selection.end);
           const afterText = text.substring(selection.end);
 
-          
-
-          return {beforeText, selectedText, afterText};
+          return {beforeText, selectedText, afterText}
       };
 
-        const applyStyles = (noteStyles: any, text: any) => {
+        const applyStyles = (noteStyles: any, text: any, selected: any) => {
 
-          const {beforeText,selectedText, afterText} = getSelectedText(text, selection)
+
+          const {beforeText,selectedText, afterText} = getSelectedText(text, selected)
+
+          console.log("beforeText", beforeText)
+          console.log("selectedText", selectedText)
+          console.log("afterText", afterText)
+
+          console.log("RANGE",noteStyles.note_id.bold)
           
             if(noteStyles.note_id.bold){
               return(<StyledText>
@@ -69,17 +79,14 @@ const NoteContent = ({route, setInput}: NoteContentProps) => {
                       <StyledText  fontWeight="bold">{selectedText}</StyledText>  
                       <StyledText >{afterText}</StyledText>
                     </StyledText>
-              
-              )
-              
-            }else{
+              ) }else{
               return <StyledText>{content} </StyledText>;
             }
 
         }
  
 
-      console.log("FORMATTED",formattedText)
+      /*console.log("FORMATTED",formattedText)*/
 
     return(
             <KeyboardAvoidingView
@@ -92,7 +99,7 @@ const NoteContent = ({route, setInput}: NoteContentProps) => {
                         name='content'
                         multiline
                         onChangeText={handleTextChange}
-                        onSelectionChange={({ nativeEvent: { selection } }: any) => {setSelection(selection), console.log(selection)}}
+                        onSelectionChange={({ nativeEvent: { selection } }: any) => {setSelection(selection)}}
                         selection={selection} 
                         header = 'header'
                         selectedTextStyle
@@ -108,7 +115,7 @@ const NoteContent = ({route, setInput}: NoteContentProps) => {
               <ScrollView horizontal style = {styles.scroll_container}  keyboardShouldPersistTaps="always">
               <View style = {styles.icon_bx}>
                   <FormatingButton name = 'bold' onPress={() => {createRange(selection, "bold")
-                    applyStyles(noteStyles, content)
+
                   }}/>
                   <FormatingButton name = 'italic' onPress={() => createRange(selection, "italic")}/>
                   <FormatingButton name = 'circle' /*onPress={() => handleFormat('resalt')}*//>
