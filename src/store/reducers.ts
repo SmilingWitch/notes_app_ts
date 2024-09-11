@@ -100,12 +100,20 @@ const userSlice = createSlice({
     addNotesStyle: (state, action) => {
       const style = action.payload.style; // El estilo (bold, italic, etc.)
       const selected = action.payload.selected; // El rango seleccionado
-      const noteId = 'note_id'; // Puedes cambiar esto a tu nota específica
+      const noteId = action.payload.note_id; // Puedes cambiar esto a tu nota específica
       const noteStyles = state.noteStyles; // El estado actual de los estilos
     
       // Crea un nuevo rango basado en la selección
       let range = new NoteRange(selected.start, selected.end);
       const newRangeObject = range.toObject(noteId, style); // Genera el objeto de rango
+      /*state.noteStyles = {
+        1725927911731: {
+          bold: [{
+            start: 0,
+            end: 0,
+          },]
+        },
+      }*/
     
       const isEmpty = (obj: any) => Object.keys(obj).length === 0; // Función para comprobar si un objeto está vacío
     
@@ -139,7 +147,7 @@ const userSlice = createSlice({
           };
         }
       }
-      console.log("NOTE STYLES",noteStyles.note_id.bold)
+      console.log("NOTE STYLES",noteStyles[noteId].bold)
     }
     
     ,
