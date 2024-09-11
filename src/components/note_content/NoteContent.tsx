@@ -29,15 +29,18 @@ const NoteContent = ({route, setInput}: NoteContentProps) => {
         };
         const dispatch = useDispatch()
         const noteStyles = useSelector((state: any) => state.noteStyles)
+
+        console.log("ARRAY",noteStyles.note_id.bold)
         
-        console.log("NOTE STYLES", noteStyles.note_id.bold)
+        /*console.log("NOTE STYLES", noteStyles.note_id.bold)*/
 
         useEffect(() => {
-          const format = applyStyles(noteStyles,content, noteStyles.note_id.bold[0])
-          setFormattedText(format)
-
-
-        }, [])
+          if(noteStyles.note_id){
+            const format = applyInitialStyles(noteStyles,content)
+            setFormattedText(format)
+          }
+          
+        }, [noteStyles])
 
         
 
@@ -47,16 +50,16 @@ const NoteContent = ({route, setInput}: NoteContentProps) => {
         const createRange =  (selected: any, style: string) =>{
           if(selected.start !== selected.end){
             dispatch(addNotesStyle({style: style, selected: selected, noteStyles: noteStyles}))
-            const format = applyStyles(noteStyles, content, selected)
+            const format = applyStyles(noteStyles, content, noteStyles.note_id.bold[0])
             setFormattedText(format)
           }
         }
 
         const getSelectedText = (text: string, selection: { start: number; end: number }) => {
 
-
-          const beforeText = text.substring(0, selection.start - 1);
-          const selectedText = text.substring(selection.start - 1, selection.end);
+          console.log("SELECTION", selection )
+          const beforeText = text.substring(0, selection.start);
+          const selectedText = text.substring(selection.start, selection.end);
           const afterText = text.substring(selection.end);
 
           return {beforeText, selectedText, afterText}
@@ -84,6 +87,54 @@ const NoteContent = ({route, setInput}: NoteContentProps) => {
             }
 
         }
+
+
+
+        const applyInitialStyles = (noteStyles: any, text: string) => {
+          let styledTextComponents: JSX.Element[] = [];
+          let currentIndex = 0; // Para rastrear la posición actual del texto
+        
+          // Verifica si hay estilos aplicados en la nota
+          if (noteStyles.note_id) {
+            // Recorre cada estilo (por ejemplo: 'bold', 'italic', etc.)
+            Object.keys(noteStyles.note_id).forEach((style: string) => {
+              // Recorre cada rango para el estilo
+              noteStyles.note_id[style].forEach((range: { start: number; end: number }) => {
+                // Extraer el texto antes del rango
+                if (currentIndex < range.start) {
+                  console.log("currentIndex",currentIndex)
+                  console.log("range.start",range.start)
+                  styledTextComponents.push(
+                    <StyledText key={`text-${currentIndex}`}>{text.substring(currentIndex, range.start - 1)}</StyledText>
+                  );
+                }
+        
+                // Extraer el texto dentro del rango y aplicar el estilo
+                styledTextComponents.push(
+                  <StyledText key={`styled-${range.start}`} fontWeight={style === 'bold' ? 'bold' : undefined}>
+                    {text.substring(range.start - 1 , range.end)}
+                  </StyledText>
+                );
+        
+                // Actualizar la posición actual
+                currentIndex = range.end;
+              });
+            });
+        
+            // Añadir el texto restante después del último rango
+            if (currentIndex < text.length) {
+              styledTextComponents.push(
+                <StyledText key={`text-${currentIndex}`}>{text.substring(currentIndex)}</StyledText>
+              );
+            }
+          } else {
+            // Si no hay estilos aplicados, devolver el texto original
+            styledTextComponents.push(<StyledText key="plain-text">{text}</StyledText>);
+          }
+        
+          return <>{styledTextComponents}</>;
+        };
+        
  
 
       /*console.log("FORMATTED",formattedText)*/
