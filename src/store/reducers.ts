@@ -110,14 +110,14 @@ const userSlice = createSlice({
         1725927911731: {
           bold: [{
             start: 0,
-            end: 0,
+            end: 2,
           },]
         },
       }*/
-    
+      
       const isEmpty = (obj: any) => Object.keys(obj).length === 0; // Función para comprobar si un objeto está vacío
     
-      // Si no hay estilos en la nota, agregar el nuevo estilo directamente
+     /* // Si no hay estilos en la nota, agregar el nuevo estilo directamente
       if (isEmpty(noteStyles)) {
         state.noteStyles = newRangeObject; // Insertamos el objeto con el nuevo rango
       } else {
@@ -134,7 +134,8 @@ const userSlice = createSlice({
               return !(range.start === selected.start && range.end === selected.end);
             });
             console.log('El rango existente ha sido eliminado');
-          } else {
+          } 
+          else {
             // Si no existe, agregamos el nuevo rango
             noteStyles[noteId][style].push({ start: selected.start, end: selected.end });
             console.log('Nuevo rango agregado');
@@ -146,11 +147,175 @@ const userSlice = createSlice({
             [style]: [{ start: selected.start, end: selected.end }]
           };
         }
-      }
+      }*/
       console.log("NOTE STYLES",noteStyles[noteId].bold)
-    }
-    
-    ,
+      
+
+      if (isEmpty(noteStyles)) {
+         // Insertamos el objeto con el nuevo rango
+         state.noteStyles = newRangeObject;
+      } else {
+         // Si ya hay estilos para la nota, verificar si el estilo actual existe (e.g., 'bold')
+        if (noteStyles[noteId] && noteStyles[noteId][style]) {
+
+          let newRanges = []; // Array para almacenar los nuevos rangos
+
+          noteStyles[noteId][style].forEach((range: any) => {
+
+            // Si el rango seleccionado esta contenido dentro de algun rango
+            if(range.start <= selected.start && range.end >= selected.end){
+              
+                
+
+            console.log("El rango esta contenido dentro de otro rango")
+
+                
+
+              newRanges.push({ start: range.start , end: selected.start - 1 }); // Rango anterior
+              newRanges.push({ start: selected.end , end: range.end  }); // Rango posterior
+
+              console.log("NEW RANGES", newRanges)
+              
+
+              /*// Elimino el rango grande 
+              noteStyles[noteId][style] = noteStyles[noteId][style].filter(item => {
+                console.log("item.start", item.start);
+                console.log("range.start", range.start);
+                console.log("item.end", item.end);
+                console.log("range.end", range.end);
+                
+                // Retorna true si NO coinciden, lo que mantendrá el item
+                return !(item.start === range.start && item.end === range.end);
+            });
+
+              state.noteStyles[noteId][style].push(newRanges[0])
+
+              console.log("NEW NOTES STYLES",noteStyles[noteId][style])
+
+              newRanges = []*/
+
+              
+
+            } 
+          })
+
+        }
+          
+      } 
+
+                
+      if (range.start === selected.start && range.end === selected.end ) {
+        console.log("El rango existe ")
+        console.log("selected.start", selected.start);
+        console.log("range.start", range.start);
+        console.log("selected.end", selected.end );
+        console.log("range.end", range.end );
+
+        noteStyles[noteId][style] = noteStyles[noteId][style].filter((range: { start: number; end: number }) => {
+          return !(range.start === selected.start && range.end   === selected.end - 1);
+        }); 
+        console.log("NOTEEEEEE", noteStyles[noteId][style])
+        
+        
+      }else if (selected.start > range.start && selected.end - 1 < range.end) {
+        console.log("Hay solapamiento")
+
+                
+      }
+      else {
+        let rangeAdd = []
+          // Si no hay solapamiento, simplemente añade el rango existente
+          console.log("NO hay solapamiento", selected)
+          rangeAdd.push({end: selected.end - 1 , start: selected.start })
+          console.log("Se agrego un rango",rangeAdd)
+
+          /*noteStyles[noteId][style].push({end: selected.end - 1 , start: selected.start });
+          console.log(noteStyles[noteId][style])
+
+          const noteStylesCopy = [...noteStyles[noteId][style]];
+
+          // Ordena la copia
+          const noteSort = noteStylesCopy.sort((a, b) => a.start - b.start);
+        
+          console.log("NOTE SORT", noteStyles[noteId][style]);
+        
+          // Si necesitas actualizar el estado con el array ordenado, asigna la copia ordenada al estado
+          state.noteStyles[noteId][style] = noteSort;*/
+
+          
+          
+        }
+      
+
+
+
+      /*if (isEmpty(noteStyles)) {
+        // Insertamos el objeto con el nuevo rango
+        state.noteStyles = newRangeObject;
+      } else {
+        console.log("RANGES OFICIAL",noteStyles[noteId][style])
+        // Si ya hay estilos para la nota, verificar si el estilo actual existe (e.g., 'bold')
+        if (noteStyles[noteId] && noteStyles[noteId][style]) {
+          
+          let newRanges = []; // Array para almacenar los nuevos rangos
+          noteStyles[noteId][style].forEach((range: any) => {
+
+
+            // Si el rango seleccionado es exactamente igual al rango existente
+            if (range.start === selected.start && range.end === selected.end - 1) {
+              noteStyles[noteId][style] = noteStyles[noteId][style].filter((range: { start: number; end: number }) => {
+                return !(range.start === selected.start && range.end === selected.end - 1);
+              });              
+              
+            }
+      
+            // Si el rango seleccionado está dentro del rango existente
+            if (selected.start > range.start && selected.end - 1 < range.end) {
+              // Dividimos el rango en dos
+              console.log("El rango seleccionado está dentro del rango existente")
+              newRanges.push({ start: range.start, end: selected.start - 1 }); // Rango anterior
+              newRanges.push({ start: selected.end + 1, end: range.end }); // Rango posterior
+
+              console.log("range.start", range.start)
+              console.log("selected.start - 1", selected.start - 1)
+              console.log("selected.end + 1", selected.end + 1)
+              console.log("end: range.end", range.end)
+              console.log(newRanges)
+            } else if (selected.start <= range.end && selected.end >= range.start) {
+              // Si hay solapamiento, pero no está contenido
+              if (selected.start <= range.start) {
+                // Modificamos el rango existente
+                newRanges.push({ start: selected.end + 1, end: range.end });
+              } else if (selected.end >= range.end) {
+                newRanges.push({ start: range.start, end: selected.start - 1 });
+              } else {
+                // Si el rango no se solapa completamente
+                newRanges.push(range);
+              }
+            }else {
+              // Si no hay solapamiento, simplemente añade el rango existente
+              console.log("NO hay solapamiento", selected)
+              console.log("RANGEEEEEEEEEEEE", range)
+              noteStyles[noteId][style].push({end: selected.end - 1, start: selected.start });
+
+              console.log(noteStyles[noteId][style])
+            }
+          });
+      
+          // Actualizamos los rangos para el estilo
+        
+        } else {
+          // Si el estilo no existe aún, creamos el array con el nuevo rango
+          noteStyles[noteId] = {
+            ...noteStyles[noteId],
+            [style]: [{ start: selected.start, end: selected.end }],
+          };
+          console.log('Nuevo estilo creado con el rango', noteStyles[noteId][style]);
+        }
+      }*/
+      console.log("--------------------------------------------------------------------------")
+    },
+
     
     
         /*state.noteStyles = {
