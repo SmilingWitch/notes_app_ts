@@ -2,11 +2,13 @@ import { StyleSheet, View } from "react-native"
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Constants from 'expo-constants'
-import Notes from "../screens/Notes"
-import NotesFolder from "../screens/NotesFolder";
 import Note from "../screens/Note";
 import ManageFolders from "../screens/ManageFolder";
 import MyDrawer from "./Drawer";
+import DiaryMode from "./diary_mode/diary_notes/DiaryMode";
+import Calendar from "./diary_mode/diary_notes/Calendar";
+import CalendarItem from "./diary_mode/diary_notes/Calendar";
+
 
 
 type RootStackParamList = {
@@ -38,6 +40,16 @@ const Main = () => {
                     <Stack.Screen 
                         name="Note" 
                         component={Note} 
+                        options={{ headerShown: false }} // Mostrar el AppBar
+                    />
+                    <Stack.Screen 
+                        name="Diary" 
+                        component={DiaryMode} 
+                        options={{ headerShown: false }} // Mostrar el AppBar
+                    />
+                    <Stack.Screen 
+                        name="Calendar" 
+                        component={CalendarItem} 
                         options={{ headerShown: false }} // Mostrar el AppBar
                     />
                 </Stack.Navigator>
