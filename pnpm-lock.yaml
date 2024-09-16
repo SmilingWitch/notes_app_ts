@@ -38,6 +38,9 @@ dependencies:
   react-native:
     specifier: 0.74.5
     version: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
+  react-native-calendars:
+    specifier: ^1.1306.0
+    version: 1.1306.0(react-native@0.74.5)(react@18.2.0)
   react-native-gesture-handler:
     specifier: ^2.16.1
     version: 2.16.1(react-native@0.74.5)(react@18.2.0)
@@ -5815,6 +5818,12 @@ packages:
     hasBin: true
     dev: false
 
+  /moment@2.30.1:
+    resolution: {integrity: sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==}
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
     dev: false
@@ -6431,6 +6440,23 @@ packages:
     resolution: {integrity: sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==}
     dev: false
 
+  /react-native-calendars@1.1306.0(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-q+RQsti8Y+sYuCzL8avh/zF5hswZLYBF9ja8eSBhqhluh0Uszyf7xobgurimi1FUXZNM0NoL1G/J3f0V46HE/Q==}
+    dependencies:
+      hoist-non-react-statics: 3.3.2
+      lodash: 4.17.21
+      memoize-one: 5.2.1
+      prop-types: 15.8.1
+      react-native-swipe-gestures: 1.0.5
+      recyclerlistview: 4.2.1(react-native@0.74.5)(react@18.2.0)
+      xdate: 0.8.3
+    optionalDependencies:
+      moment: 2.30.1
+    transitivePeerDependencies:
+      - react
+      - react-native
+    dev: false
+
   /react-native-gesture-handler@2.16.1(react-native@0.74.5)(react@18.2.0):
     resolution: {integrity: sha512-7AlZS2IWDPQylAYOQle2mI0Xs0omAd/Kr+gAy58hjS14LUhxZAwYMVxcSFMlN9PfzXomoNVhmJBapDWIWUw/NA==}
     peerDependencies:
@@ -6488,6 +6514,10 @@ packages:
       react-freeze: 1.0.4(react@18.2.0)
       react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
       warn-once: 0.1.1
+    dev: false
+
+  /react-native-swipe-gestures@1.0.5:
+    resolution: {integrity: sha512-Ns7Bn9H/Tyw278+5SQx9oAblDZ7JixyzeOczcBK8dipQk2pD7Djkcfnf1nB/8RErAmMLL9iXgW0QHqiII8AhKw==}
     dev: false
 
   /react-native@0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0):
@@ -6628,6 +6658,19 @@ packages:
       esprima: 4.0.1
       source-map: 0.6.1
       tslib: 2.6.3
+    dev: false
+
+  /recyclerlistview@4.2.1(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-NtVYjofwgUCt1rEsTp6jHQg/47TWjnO92TU2kTVgJ9wsc/ely4HnizHHa+f/dI7qaw4+zcSogElrLjhMltN2/g==}
+    peerDependencies:
+      react: '>= 15.2.1'
+      react-native: '>= 0.30.0'
+    dependencies:
+      lodash.debounce: 4.0.8
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.3)(@types/react@18.2.79)(react@18.2.0)
+      ts-object-utils: 0.0.5
     dev: false
 
   /redux-persist@6.0.0(react@18.2.0)(redux@5.0.1):
@@ -7444,6 +7487,10 @@ packages:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
     dev: false
 
+  /ts-object-utils@0.0.5:
+    resolution: {integrity: sha512-iV0GvHqOmilbIKJsfyfJY9/dNHCs969z3so90dQWsO1eMMozvTpnB1MEaUbb3FYtZTGjv5sIy/xmslEz0Rg2TA==}
+    dev: false
+
   /tslib@2.6.3:
     resolution: {integrity: sha512-xNvxJEOUiWPGhUuUdQgAJPKOOJfGnIyKySOc09XkKsgdUV/3E2zvwZYdejjmRgPCgcym1juLH3226yA7sEFJKQ==}
     dev: false
@@ -7874,6 +7921,10 @@ packages:
     dependencies:
       simple-plist: 1.3.1
       uuid: 7.0.3
+    dev: false
+
+  /xdate@0.8.3:
+    resolution: {integrity: sha512-1NhJWPJwN+VjbkACT9XHbQK4o6exeSVtS2CxhMPwUE7xQakoEFTlwra9YcqV/uHQVyeEUYoYC46VGDJ+etnIiw==}
     dev: false
 
   /xml2js@0.6.0:
