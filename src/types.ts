@@ -80,7 +80,9 @@ export interface FormattingBtnProps {
 }
 
 interface AppParamList extends ParamListBase {
-    Note: { content?: string }; 
+    Note: { content?: string,
+            id? :number
+     }; 
 } 
 
 export interface NoteContentProps{

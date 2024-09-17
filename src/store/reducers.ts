@@ -110,7 +110,7 @@ const userSlice = createSlice({
         1725927911731: {
           bold: [{
             start: 0,
-            end: 23,
+            end: 0,
           },]
         },
       }*/
@@ -122,7 +122,6 @@ const userSlice = createSlice({
   console.log("NOTE STYLES", noteStyles[noteId]?.bold);
   let existingRange = true;
 
-  
 
 
       /*if (isEmpty(noteStyles)) {
@@ -148,6 +147,7 @@ const userSlice = createSlice({
               newRanges.push({ start: range.start , end: selected.start - 1 }); // Rango anterior
               newRanges.push({ start: selected.end , end: range.end  }); // Rango posterior
               console.log("NEW RANGES", newRanges)
+              console.log("NEW RANGES primer elemento", newRanges[0])
               
 
               // Elimino el rango grande 
@@ -162,6 +162,10 @@ const userSlice = createSlice({
             });
 
               state.noteStyles[noteId][style].push(newRanges[0])
+              if(newRanges[1]){
+                state.noteStyles[noteId][style].push(newRanges[1])
+              }
+              
 
               console.log("NEW NOTES STYLES",noteStyles[noteId][style])
 
@@ -189,9 +193,7 @@ const userSlice = createSlice({
           // Modificamos el rango existente
           console.log("HAY SOLAPAMIENTO PERO NO ESTA CONTENIDO")
           newRanges.push({ start: selected.end + 1, end: range.end });
-        } else if (selected.end >= range.end) {
-          console.log("HAY SOLAPAMIENTO PERO Y ESTA CONTENIDO")
-          newRanges.push({ start: range.start, end: selected.start - 1 });
+
         } else {
           // Si el rango no se solapa completamente
           console.log("EL RANGO NO SE SOLAPAmiento")
@@ -200,6 +202,7 @@ const userSlice = createSlice({
 
                 
       } else {
+        
         console.log("AGREGADO AQUI--------------------------------------------------------------------------")
         let rangeAdd = []
           // Si no hay solapamiento, simplemente añade el rango existente

@@ -31,7 +31,6 @@ const Note = ({navigation, route}: Props) => {
         <View style = {styles.container}>
             <NoteHeader navigation = {navigation} route = {route} input = {input} />
             <NoteContent route = {route} setInput = {setInput} />
-            {/*<FormatingBar onFormat={handleFormat}/>*/}
         </View>
         
     )
