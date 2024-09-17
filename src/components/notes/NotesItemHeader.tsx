@@ -21,8 +21,8 @@ const NotesItemHeader = ({navigation, route}: AppBarProps) => {
                 <StyledText fontSize='h2' fontWeight='bold'>Notella</StyledText> 
             </View>
             <View style = {styles.icon_cont}>
-                <TouchableOpacity /*onPress = {() => navigation.navigate('')}*/>
-                    <Icon name = "search1" style = {styles.icon}></Icon>
+                <TouchableOpacity onPress = {() => navigation.navigate('Diary')}>
+                    <Icon name = "book" style = {styles.icon}></Icon>
                 </TouchableOpacity>
 
                 {selected.length >= 1  ? // porque no pude quitarle el 0 del inicio del arreglo
