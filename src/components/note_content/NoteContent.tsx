@@ -24,7 +24,7 @@ const NoteContent = ({route, setInput}: NoteContentProps) => {
     
         //Select fraction of text
         const [selection, setSelection] = useState({ start: 0, end: 0 });
-        const [formattedText, setFormattedText] = useState("")
+        const [formattedText, setFormattedText] = useState(content)
         
 
           const handleTextChange = (text: string) => {
