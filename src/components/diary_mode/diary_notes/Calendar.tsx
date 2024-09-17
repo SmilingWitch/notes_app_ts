@@ -47,7 +47,6 @@ const CalendarItem = ({navigation, route}: NotesListProps) => {
     ? new Date(selectedDate).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })
     : null;
 
-    console.log(formattedDate.day)
 
   return (
     <View style={styles.container}>
