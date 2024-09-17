@@ -25,7 +25,6 @@ const DiaryNotesList = () => {
             data = {data}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
-
             ListEmptyComponent={
                 <View style = {styles.empty_list}>
                     <StyledText>
@@ -41,13 +40,9 @@ const DiaryNotesList = () => {
 }
 
 const styles = StyleSheet.create({
-    containerWrapp:{
-       justifyContent: 'space-between',
-       paddingHorizontal: lighTeme.padding,
-
-    },
     container: {
         backgroundColor: lighTeme.colors.primary,
+        
     },
     empty_list: {
         flex: 1,
