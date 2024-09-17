@@ -121,9 +121,6 @@ const userSlice = createSlice({
 
   console.log("NOTE STYLES", noteStyles[noteId]?.bold);
   let existingRange = true;
-
-
-
       /*if (isEmpty(noteStyles)) {
          // Insertamos el objeto con el nuevo rango
          state.noteStyles = newRangeObject;
@@ -193,6 +190,28 @@ const userSlice = createSlice({
           // Modificamos el rango existente
           console.log("HAY SOLAPAMIENTO PERO NO ESTA CONTENIDO")
           newRanges.push({ start: selected.end + 1, end: range.end });
+        } else if (selected.end >= range.end) {
+          console.log("HAY SOLAPAMIENTO PERO Y ESTA CONTENIDO")
+          newRanges.push({ start: range.start, end: selected.start - 1 });
+
+
+          
+
+        } else if (selected.end >= range.end) {
+          console.log("HAY SOLAPAMIENTO PERO Y ESTA CONTENIDO")
+          newRanges.push({ start: range.start, end: selected.start - 1 });
+
+          noteStyles[noteId][style] = noteStyles[noteId][style].filter(item => {
+            console.log("item.start", item.start);
+            console.log("range.start", range.start);
+            console.log("item.end", item.end);
+            console.log("range.end", range.end);
+            
+            // Retorna true si NO coinciden, lo que mantendrá el item
+            return !(item.start === range.start && item.end === range.end);
+        });
+
+        noteStyles[noteId][style].push(newRanges)
 
         } else {
           // Si el rango no se solapa completamente
