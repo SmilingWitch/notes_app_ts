@@ -40,6 +40,7 @@ const StyledTextInput = ({  style = {},
                   ref= {header && inputRef} 
                   editable 
                   multiline 
+                  placeholderTextColor={lighTeme.colors.textPrimary}
                   inputMode="text"
                   textAlignVertical="top"></TextInput>
         
