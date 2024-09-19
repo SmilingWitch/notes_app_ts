@@ -20,12 +20,7 @@ const Note = ({navigation, route}: Props) => {
     const {content} = route.params
     const{category_name} = route.params
     console.log("CATEGORY 20",category_name)
-    const [input, setInput] = useState(content);
-
-    const notes = useSelector((state : UserState) => state.notes);
-        
-
-        
+    const [input, setInput] = useState(content); 
 
     return(
         <View style = {styles.container}>
