@@ -12,16 +12,23 @@ interface Folder {
   id: number,
   name: string,
 }
+interface Entries {
+  id: number,
+  title: string,
+  content: string,
+  date: number
+}
 
 export interface UserState {
   notes: Note[];
   folder: Folder[],
+  entries: Entries[],
   selectedFolderID: any[],
   selectedNoteID: any[],
   noteStyles: {}
 }
 
-class NoteRange {
+/*class NoteRange {
   public start: number;
   public end: number;
 
@@ -40,11 +47,12 @@ class NoteRange {
       },
     };
   }
-}
+}*/
 
 const initialState: UserState = {
   notes: [],
   folder: [],
+  entries: [],
   selectedFolderID: [],
   selectedNoteID: [],
   noteStyles: {}
@@ -55,6 +63,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
 
+    //FOLDER
     createFolder: (state, action) => {
       const newFolder: Folder = {
         id: Date.now(), // Puedes usar un generador de ID más robusto
@@ -93,6 +102,8 @@ const userSlice = createSlice({
       state.selectedFolderID = state.selectedFolderID.filter((folder: any) => folder.id !== folderId)
     },
 
+    //NOTE
+
     selectedNote: (state, action) => {
       const noteId = action.payload;
       state.selectedNoteID.push(noteId);
@@ -103,8 +114,6 @@ const userSlice = createSlice({
       const noteId = action.payload.note_id; // Puedes cambiar esto a tu nota específica
       const noteStyles = state.noteStyles; // El estado actual de los estilos
     },
-   
-    
     clearSelectedNote: (state, action) => {
       state.selectedNoteID = []
     },
@@ -150,6 +159,17 @@ const userSlice = createSlice({
     state.selectedNoteID = []
     },
 
+    //ENTRIES
+    addEntry: (state, action) => {
+      const newEntries: Entries = {
+        id: Date.now(), // Puedes usar un generador de ID más robusto
+        title: action.payload.title,
+        content: action.payload.content,
+        date: action.payload.date,
+      };
+      state.entries.push(newEntries);
+    },
+
   },
 });
 
@@ -164,5 +184,6 @@ export const {  addNote,
                 clearSelectedFolder,
                 clearSelectedFolderById,
                 clearSelectedNote,
-                clearSelectedNoteById } = userSlice.actions;
+                clearSelectedNoteById,
+                addEntry } = userSlice.actions;
 export default userSlice.reducer;
