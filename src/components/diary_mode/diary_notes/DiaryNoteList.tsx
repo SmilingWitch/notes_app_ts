@@ -6,32 +6,36 @@ import DiaryNoteItem from "./DiaryNoteItem";
 import { NotesListProps } from "../../../types";
 import lighTeme from "../../../lightTheme";
 import StyledText from "../../common/StyledText";
+import { useSelector } from "react-redux";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ParamListBase } from "@react-navigation/native";
 
+interface DiaryNoteParam{
+    navigation:NativeStackNavigationProp<ParamListBase>
+} 
 
+const DiaryNotesList = ({navigation}: DiaryNoteParam) => {
 
-const DiaryNotesList = () => {
+    const entries = useSelector((state : any) => state.entries)
 
-    const data = [
-        {id: 1},
-        {id: 2}
-    ]
+    console.log(entries)
 
     const renderItem = ({item}: any) => (
-        <DiaryNoteItem />   
+        <DiaryNoteItem item = {item} navigation = {navigation} />   
     )
 
     return(
         <FlatList
-            data = {data}
+            data = {entries}
             renderItem={renderItem}
             keyExtractor={(item) => item.id}
             ListEmptyComponent={
                 <View style = {styles.empty_list}>
                     <StyledText>
-                        No notes
+                        Cherish every moment.
                     </StyledText>
                     <StyledText fontSize="small" >
-                        Tab the Add button to create a note
+                        Tab to start your diary journey
                     </StyledText>
                 </View> 
             }
