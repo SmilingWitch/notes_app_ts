@@ -3,12 +3,12 @@ import Icon from '@expo/vector-icons/AntDesign'
 import Icon1 from '@expo/vector-icons/FontAwesome'
 import { useDispatch, useSelector } from "react-redux";
 import { DrawerActions } from "@react-navigation/native";
-import { AppBarProps } from "../../../types";
+import { AppBarDiaryProps, AppBarProps } from "../../../types";
 import StyledText from "../../common/StyledText";
 import { deleteNote } from "../../../store/reducers";
 import lighTeme from "../../../lightTheme";
 
-const DiaryNotesHeader = ({navigation, route}: AppBarProps) => {
+const DiaryNotesHeader = ({navigation}: AppBarDiaryProps) => {
 
     const selected = useSelector((state : any) => state.selectedNoteID)
     const dispatch = useDispatch()
