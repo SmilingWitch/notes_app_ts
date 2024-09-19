@@ -5,12 +5,9 @@ import lighTeme from "../../../lightTheme"
 
 
 
-const DiaryAppBar = ({navigation, route, date}: DiaryAppBarProps) => {
-
-
+const DiaryAppBar = ({navigation, date}: DiaryAppBarProps) => {
 
     return(
-    
         <TouchableOpacity style = {styles.icon_pluss} onPress={() => navigation.navigate('DiaryNote', {title: "", content: "", new_note: true, date: date})}>
             <Icon name = "plus" style = {styles.icon}></Icon>
         </TouchableOpacity>

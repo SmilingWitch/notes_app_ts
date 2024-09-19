@@ -1,9 +1,7 @@
 
 
 import { FlatList, StyleSheet, View } from "react-native"
-import { useEffect, useState } from "react";
 import DiaryNoteItem from "./DiaryNoteItem";
-import { NotesListProps } from "../../../types";
 import lighTeme from "../../../lightTheme";
 import StyledText from "../../common/StyledText";
 import { useSelector } from "react-redux";
@@ -17,8 +15,6 @@ interface DiaryNoteParam{
 const DiaryNotesList = ({navigation}: DiaryNoteParam) => {
 
     const entries = useSelector((state : any) => state.entries)
-
-    console.log(entries)
 
     const renderItem = ({item}: any) => (
         <DiaryNoteItem item = {item} navigation = {navigation} />   

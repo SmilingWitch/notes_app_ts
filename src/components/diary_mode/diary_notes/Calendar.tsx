@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Text, View, StyleSheet, TextInput } from "react-native";
+import { Text, View, StyleSheet, TextInput } from "react-native";
 import { Calendar, DateData } from 'react-native-calendars';
 import lighTeme from "../../../lightTheme";
 import StyledText from "../../common/StyledText";
@@ -19,8 +19,6 @@ const CalendarItem = ({navigation, route}: EntryListProps) => {
 
   const handleDayPress = (day: DateData) => {
     setSelectedDate(day.dateString);
-
-    console.log(selectedDate)
   };
   
 

@@ -3,18 +3,13 @@ import StyledText from "../../common/StyledText"
 import lighTeme from "../../../lightTheme"
 import formatedDataWithString from "../../../functions/formatedDataWithString"
 import TruncatedText from "../../common/TruncatedText"
-import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { ParamListBase } from "@react-navigation/native"
+import { DiaryNoteItemProp } from "../../../types"
 
-interface DiaryNoteItemProp{
-    item: any,
-    navigation:NativeStackNavigationProp<ParamListBase>
-}
+
 
 const DiaryNoteItem = ({item, navigation}: DiaryNoteItemProp) => {
 
-    
-    const {dayOfWeek, month, year, dayOfMonth } = formatedDataWithString(item.date)
+    const {month, year, dayOfMonth } = formatedDataWithString(item.date)
 
 
     return(

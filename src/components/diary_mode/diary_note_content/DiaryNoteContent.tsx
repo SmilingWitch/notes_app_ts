@@ -8,33 +8,27 @@ import formatedDataWithString from "../../../functions/formatedDataWithString"
 
 const DiaryNoteContent = ({route, setInput}: DiaryContentProps) => {
 
+    const { date, title, content } = route.params
 
-      const { date } = route.params
-      const {title} = route.params
-      const {content} = route.params
+    const inputRef = useRef(null);
+    const handleFocus = () => {
+        inputRef.current?.focus(); // Muestra el teclado
+    };
+      
+    const [content_copy, setContent] = useState(content || "");
+    const [title_copy, setTitle] = useState(title || "");
+    const [date_copy, setDate] = useState(date || 0);
+    const { month, year, dayOfMonth } = formatedDataWithString(date_copy)
 
-      const {dayOfWeek, month, year, dayOfMonth } = formatedDataWithString(date)
-
-    console.log(date)
-
-      const inputRef = useRef(null);
-      const handleFocus = () => {
-            inputRef.current?.focus(); // Muestra el teclado
-        };
-        
-        const [content_copy, setContent] = useState(content);
-        const [title_copy, setTitle] = useState(title);
-        const [date_copy, setDate] = useState(date);
-    
-        const handleTextChange = (text: string) => {
-            setContent(text); // Actualiza el segundo estado
-            setInput({title: title_copy, content: content_copy, date: date_copy})
-        };
-        
-        const handleTitleChange = (text: string) => {
-            setTitle(text); // Actualiza el primer estado
-            setInput({title: title_copy, content: content_copy, date: date_copy})
-        };
+    const handleTextChange = (text: string) => {
+        setContent(text); // Actualiza el segundo estado
+        setInput({title: title_copy, content: content_copy, date: date_copy})
+    };
+      
+    const handleTitleChange = (text: string) => {
+        setTitle(text); // Actualiza el primer estado
+        setInput({title: title_copy, content: content_copy, date: date_copy})
+    };
         
 
     return(
