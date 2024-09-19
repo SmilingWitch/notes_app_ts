@@ -4,14 +4,15 @@ import { Calendar, DateData } from 'react-native-calendars';
 import lighTeme from "../../../lightTheme";
 import StyledText from "../../common/StyledText";
 import DiaryAppBar from "./DiaryAppBar";
-import { NotesListProps } from "../../../types";
+import { EntryListProps } from "../../../types";
 
 interface Event {
   date: string;
   description: string;
+
 }
 
-const CalendarItem = ({navigation, route}: NotesListProps) => {
+const CalendarItem = ({navigation, route}: EntryListProps) => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [eventDescription, setEventDescription] = useState<string>('');
   const [events, setEvents] = useState<{ [key: string]: Event[] }>({});
@@ -21,6 +22,7 @@ const CalendarItem = ({navigation, route}: NotesListProps) => {
 
     console.log(selectedDate)
   };
+  
 
   const handleAddEvent = () => {
     if (selectedDate && eventDescription) {
@@ -44,9 +46,15 @@ const CalendarItem = ({navigation, route}: NotesListProps) => {
 
   // Formateo de la fecha con mes en letras y año
   const formattedDate = selectedDate
-    ? new Date(selectedDate).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })
+    
+    ? new Date(`${selectedDate}T00:00:00`).toLocaleDateString('en-US', {
+      day: 'numeric',
+      month: 'short',  // 'long' para mostrar el mes en letras
+      year: 'numeric',
+    })
     : null;
 
+    const dateInMilliseconds = new Date(`${selectedDate}T00:00:00`).getTime();
 
   return (
     <View style={styles.container}>
@@ -71,7 +79,7 @@ const CalendarItem = ({navigation, route}: NotesListProps) => {
       {selectedDate && (
         <View style={styles.eventForm}>
           <StyledText style={styles.label}>{formattedDate}</StyledText>
-          <Button title="Agregar evento" onPress={handleAddEvent} />
+          {/*<Button title="Agregar evento" onPress={handleAddEvent} />*/}
         </View>
       )}
       {selectedDate && events[selectedDate] && (
@@ -84,7 +92,7 @@ const CalendarItem = ({navigation, route}: NotesListProps) => {
           ))}
         </View>
       )}
-      <DiaryAppBar navigation={navigator} route={route}/>
+      <DiaryAppBar navigation={navigation} route={route} date = {dateInMilliseconds}/>
     </View>
   );
 };
