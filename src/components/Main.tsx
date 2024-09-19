@@ -5,9 +5,10 @@ import Constants from 'expo-constants'
 import Note from "../screens/Note";
 import ManageFolders from "../screens/ManageFolder";
 import MyDrawer from "./Drawer";
-import DiaryMode from "./diary_mode/diary_notes/DiaryMode";
+import DiaryMode from "../screens/DiaryMode";
 import Calendar from "./diary_mode/diary_notes/Calendar";
 import CalendarItem from "./diary_mode/diary_notes/Calendar";
+import DiaryNote from "../screens/DiaryNote";
 
 
 
@@ -50,6 +51,11 @@ const Main = () => {
                     <Stack.Screen 
                         name="Calendar" 
                         component={CalendarItem} 
+                        options={{ headerShown: false }} // Mostrar el AppBar
+                    />
+                    <Stack.Screen 
+                        name="DiaryNote" 
+                        component={DiaryNote} 
                         options={{ headerShown: false }} // Mostrar el AppBar
                     />
                 </Stack.Navigator>
